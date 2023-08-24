@@ -6,14 +6,17 @@ using System.Data;
 
 namespace ProjetoEscola.CSql
 {
-    public class ConnectBancoAlunos : IExecutavel<Aluno>
+    public class ConexaoComSqlAlunos : IExecutavel<Aluno>
     {
         string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
         MySqlConnection conexao = null;
         MySqlCommand comandos;
         Conexao con = new Conexao();
+        MySqlDataReader dr;
 
-        
+        public bool TemNoBanco;
+        public string? mensagem;
+
         public DataTable ListarDados()
         {
             try
@@ -29,14 +32,15 @@ namespace ProjetoEscola.CSql
                 da.SelectCommand = comandos;
 
                 DataTable dtAlunos = new DataTable();
-                
+
                 da.Fill(dtAlunos);
 
                 con.FecharConexao();
 
                 return dtAlunos;
 
-            }catch (Exception ) { throw; }
+            }
+            catch (Exception) { throw; }
         }
 
         public void Salvar(Aluno aluno)
@@ -56,7 +60,7 @@ namespace ProjetoEscola.CSql
 
                 comandos.ExecuteNonQuery();
             }
-            catch (Exception ex ) { MessageBox.Show("Erro ao salvar" + ex); }
+            catch (Exception ex) { MessageBox.Show("Erro ao salvar" + ex); }
         }
 
         public void Editar(Aluno aluno)
@@ -80,7 +84,7 @@ namespace ProjetoEscola.CSql
             }
             catch (Exception) { throw; }
 
-            
+
         }
 
         public void Excluir(Aluno aluno)
@@ -95,7 +99,40 @@ namespace ProjetoEscola.CSql
                 comandos.ExecuteNonQuery();
 
             }
-            catch(Exception) { throw; }
+            catch (Exception) { throw; }
+        }
+
+        public bool Verificar(int ra)
+        {
+
+
+            try
+            {
+                conexao = new MySqlConnection(servidor);
+
+                con.AbrirConexao();
+                var connAberta = con.AbrirConexao();
+
+                comandos = new MySqlCommand("SELECT * FROM alunos WHERE RA LIKE @ra", connAberta);
+                comandos.Parameters.AddWithValue("@ra", ra);
+
+
+
+                MySqlDataAdapter da = new MySqlDataAdapter();
+
+                da.SelectCommand = comandos;
+
+                dr = comandos.ExecuteReader();
+
+                if (dr.HasRows)
+                {
+                    TemNoBanco = true;
+                }
+
+            }
+            catch (MySqlException) { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+
+            return TemNoBanco;
         }
     }
 }

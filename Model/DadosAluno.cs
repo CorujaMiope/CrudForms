@@ -11,7 +11,7 @@ namespace ProjetoEscola.PonteDados
 {
     public class DadosAluno
     {
-        ConnectBancoAlunos bancoAlunos = new ConnectBancoAlunos();
+        ConexaoComSqlAlunos bancoAlunos = new ConexaoComSqlAlunos();
 
         public DataTable Listar()
         {
@@ -52,6 +52,13 @@ namespace ProjetoEscola.PonteDados
 
             }catch (Exception) { throw; }
            
+        }
+
+        public bool Verificar(int ra)
+        {
+           bool vr = bancoAlunos.Verificar(ra);
+
+            return vr;
         }
     }
 }

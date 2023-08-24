@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ProjetoEscola.Interface;
+using Microsoft.VisualBasic.Logging;
 
 namespace ProjetoEscola.CSql
 {
@@ -40,14 +41,41 @@ namespace ProjetoEscola.CSql
 
                 dr = comandos.ExecuteReader();
 
-
-
-
                 if (dr.HasRows)
                 {
                     TemNoBanco = true;
                 }
 
+            }
+            catch (MySqlException) { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+
+            return TemNoBanco;
+        }
+
+        public bool VerificarRA(int ra)
+        {
+            try
+            {
+                conexao = new MySqlConnection(servidor);
+
+                con.AbrirConexao();
+                var connAberta = con.AbrirConexao();
+
+                comandos = new MySqlCommand("SELECT * FROM alunos WHERE RA LIKE @ra", connAberta);
+                comandos.Parameters.AddWithValue("@ra", ra);
+                
+
+
+                MySqlDataAdapter da = new MySqlDataAdapter();
+
+                da.SelectCommand = comandos;
+
+                dr = comandos.ExecuteReader();
+
+                if (dr.HasRows)
+                {
+                    TemNoBanco = true;
+                }
 
             }
             catch (MySqlException) { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }

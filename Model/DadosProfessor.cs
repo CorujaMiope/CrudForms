@@ -10,7 +10,7 @@ using ProjetoEscola.Entidades;
 
 namespace ProjetoEscola.PonteDados
 {
-    public class DadosProfessor: ConnectBancoProfs
+    public class DadosProfessor: ConexaoComSqlProfessor
      
     {
        
@@ -58,6 +58,17 @@ namespace ProjetoEscola.PonteDados
             }
             catch (Exception) { throw; }
 
+        }
+
+        public bool VerificarID(int id)
+        {
+            try
+            {
+                bool vr = Verificar(id);
+
+                return vr;
+
+            }catch (Exception) { throw; }
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoEscola.CSql
 {
-    public class ConnectMateria
+    public class ConexaoComSqlMateria
     {
         string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
         MySqlConnection conexao = null;

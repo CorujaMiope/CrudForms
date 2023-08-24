@@ -10,7 +10,7 @@ namespace ProjetoEscola.PonteDados
 {
     public class DadosMateria
     {
-        ConnectMateria mt = new ConnectMateria(); 
+        ConexaoComSqlMateria mt = new ConexaoComSqlMateria(); 
         public DataTable ListaDeMateria()
         {
             try

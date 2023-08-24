@@ -10,15 +10,19 @@ using ProjetoEscola.Interface;
 
 namespace ProjetoEscola.CSql
 {
-    public class ConnectBancoProfs: IExecutavel<Professor>
+    public class ConexaoComSqlProfessor: IExecutavel<Professor>
     {
 
         string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
         MySqlConnection conexao = null;
         MySqlCommand comandos;
+        MySqlDataReader dr;
         Conexao con = new Conexao();
 
-        
+        public bool TemNoBanco;
+        public string? mensagem;
+
+
 
         public DataTable ListarDados()
         {
@@ -59,13 +63,13 @@ namespace ProjetoEscola.CSql
 
                 
                 
-                comandos = new MySqlCommand("INSERT INTO professor (Id, Nome, Sexo, Nascimento, Materia) VALUES (@id, @nome, @sexo, @nascimento, @materia, @email, @senha)", connAberta);
+                comandos = new MySqlCommand("INSERT INTO professor VALUES (@id, @nome, @sexo, @nascimento, @materia, @login, @senha)", connAberta);
                 comandos.Parameters.AddWithValue("@id",professor.ID );
                 comandos.Parameters.AddWithValue("@nome", professor.Nome);
                 comandos.Parameters.AddWithValue("@sexo", professor.Sexo);
                 comandos.Parameters.AddWithValue("@nascimento", professor.Nascimento);
                 comandos.Parameters.AddWithValue("@materia", professor.Materia);
-                comandos.Parameters.AddWithValue("@email", professor.Usuario);
+                comandos.Parameters.AddWithValue("@login", professor.Usuario);
                 comandos.Parameters.AddWithValue("@senha", professor.Senha);
 
                 comandos.ExecuteNonQuery();
@@ -86,13 +90,13 @@ namespace ProjetoEscola.CSql
             { 
                 var connAberta = con.AbrirConexao();
 
-                comandos = new MySqlCommand("UPDATE professor SET   Nome = @nome , Sexo =  @sexo, Nascimento =  @nascimento, Materia = @materia, Email = @email, Senha = @senha WHERE Id = @id", connAberta);
+                comandos = new MySqlCommand("UPDATE professor SET   Nome = @nome , Sexo =  @sexo, Nascimento =  @nascimento, Materia = @materia, Login = @login, Senha = @senha WHERE Id = @id", connAberta);
                 comandos.Parameters.AddWithValue("@id",professor.ID);
                 comandos.Parameters.AddWithValue("@nome", professor.Nome);
                 comandos.Parameters.AddWithValue("@sexo", professor.Sexo);
                 comandos.Parameters.AddWithValue("@nascimento", professor.Nascimento);
                 comandos.Parameters.AddWithValue("@materia", professor.Materia);
-                comandos.Parameters.AddWithValue("@email", professor.Usuario);
+                comandos.Parameters.AddWithValue("@login", professor.Usuario);
                 comandos.Parameters.AddWithValue("@senha", professor.Senha);
 
                 comandos.ExecuteNonQuery();
@@ -117,6 +121,37 @@ namespace ProjetoEscola.CSql
             catch (Exception) { throw; }
         }
 
-       
+        public bool Verificar(int ra)
+        {
+
+
+            try
+            {
+                conexao = new MySqlConnection(servidor);
+
+                con.AbrirConexao();
+                var connAberta = con.AbrirConexao();
+
+                comandos = new MySqlCommand("SELECT * FROM alunos WHERE RA LIKE @ra", connAberta);
+                comandos.Parameters.AddWithValue("@ra", ra);
+
+
+
+                MySqlDataAdapter da = new MySqlDataAdapter();
+
+                da.SelectCommand = comandos;
+
+                dr = comandos.ExecuteReader();
+
+                if (dr.HasRows)
+                {
+                    TemNoBanco = true;
+                }
+
+            }
+            catch (MySqlException) { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+
+            return TemNoBanco;
+        }
     }
 }

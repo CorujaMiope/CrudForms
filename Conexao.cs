@@ -9,8 +9,8 @@ namespace ProjetoEscola
 {
     internal class Conexao
     {
-        string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
-        public MySqlConnection conexao;
+        readonly string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
+        public MySqlConnection? conexao;
 
         public MySqlConnection AbrirConexao()
         {

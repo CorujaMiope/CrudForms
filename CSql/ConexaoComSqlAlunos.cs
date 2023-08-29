@@ -8,11 +8,11 @@ namespace ProjetoEscola.CSql
 {
     public class ConexaoComSqlAlunos : IExecutavel<Aluno>
     {
-        string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
-        MySqlConnection conexao = null;
-        MySqlCommand comandos;
-        Conexao con = new Conexao();
-        MySqlDataReader dr;
+        readonly string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
+        MySqlConnection? conexao = null;
+        MySqlCommand? comandos;
+        readonly Conexao con = new();
+        MySqlDataReader? dr;
 
         public bool TemNoBanco;
         public string? mensagem;
@@ -27,11 +27,12 @@ namespace ProjetoEscola.CSql
 
                 comandos = new MySqlCommand("SELECT * FROM alunos order by Sala,Nome", conexao);
 
-                MySqlDataAdapter da = new MySqlDataAdapter();
+                var da = new MySqlDataAdapter
+                {
+                    SelectCommand = comandos
+                };
 
-                da.SelectCommand = comandos;
-
-                DataTable dtAlunos = new DataTable();
+                DataTable dtAlunos = new();
 
                 da.Fill(dtAlunos);
 
@@ -118,9 +119,10 @@ namespace ProjetoEscola.CSql
 
 
 
-                MySqlDataAdapter da = new MySqlDataAdapter();
-
-                da.SelectCommand = comandos;
+                var da = new MySqlDataAdapter
+                {
+                    SelectCommand = comandos
+                };
 
                 dr = comandos.ExecuteReader();
 
@@ -133,6 +135,33 @@ namespace ProjetoEscola.CSql
             catch (MySqlException) { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
 
             return TemNoBanco;
+        }
+
+        public DataTable ListarDadosBasicos()
+        {
+            try
+            {
+                con.AbrirConexao();
+
+                conexao = new MySqlConnection(servidor);
+
+                comandos = new MySqlCommand("SELECT Sala, Nome, RA FROM alunos order by Sala,Nome", conexao);
+
+                var da = new MySqlDataAdapter
+                {
+                    SelectCommand = comandos
+                };
+
+                DataTable dtAlunos = new();
+
+                da.Fill(dtAlunos);
+
+                con.FecharConexao();
+
+                return dtAlunos;
+
+            }
+            catch (Exception) { throw; }
         }
     }
 }

@@ -12,12 +12,12 @@ namespace ProjetoEscola.Model
 {
     public class DadosBoletim
     {
-        ConexaoComSqlBoletim notas = new ConexaoComSqlBoletim();
+        readonly ConexaoComSqlBoletim notas = new();
         public DataTable Listar()
         {
             try
             {
-                DataTable ListarNotas = new DataTable();
+                DataTable ListarNotas = new();
 
                 ListarNotas = notas.ListarDados();
 
@@ -51,7 +51,7 @@ namespace ProjetoEscola.Model
             
         }
 
-        public void excluir(BoletimAluno boletim)
+        public void Excluir(BoletimAluno boletim)
         {
             try
             {
@@ -62,11 +62,13 @@ namespace ProjetoEscola.Model
             
         }
 
-        public bool Verificar(int ra)
+        public bool Verificar(int ra, string materia)
         {
-            bool vr = notas.Verificar(ra);
+            bool vr = notas.VerificarBoletim(ra, materia);
 
             return vr;
         }
+
+
     }
 }

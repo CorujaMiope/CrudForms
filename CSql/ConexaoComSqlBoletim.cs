@@ -2,6 +2,7 @@
 using ProjetoEscola.Entidades;
 using ProjetoEscola.Interface;
 using ProjetoEscola.JanelaAluno.Boletim;
+using ProjetoEscola.View;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,14 +16,15 @@ namespace ProjetoEscola.CSql
     public class ConexaoComSqlBoletim: IExecutavel<BoletimAluno>
     {
         string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
-        MySqlConnection conexao = null;
-        MySqlCommand comandos;
-        MySqlDataReader dr;
+        MySqlConnection? conexao = null;
+        MySqlCommand? comandos;
+        MySqlDataReader? dr;
         Conexao con = new Conexao();
 
 
         public bool TemNoBanco;
         public string? menssagem;
+        string? materia = AreaDoProfessor.materia;
 
         public DataTable ListarDados()
         {
@@ -32,9 +34,9 @@ namespace ProjetoEscola.CSql
 
                 conexao = new MySqlConnection(servidor);
 
-                comandos = new MySqlCommand("SELECT a.RA, a.Nome, a.Sala, b.Materia, b.Nota1, b.Nota2, b.Nota3, b.Nota4, b.NotaFinal, b.Resultado FROM Alunos a\r\nINNER JOIN Boletim b\r\non a.RA = b.RA\r\nwhere b.RA =a.RA\r\norder by a.Sala, a.Nome", conexao);
-
-                MySqlDataAdapter da = new MySqlDataAdapter();
+                comandos = new MySqlCommand("SELECT a.RA, a.Nome, a.Sala, b.Materia, b.Nota1, b.Nota2, b.Nota3, b.Nota4, b.NotaFinal, b.Resultado FROM Alunos a\r\nINNER JOIN Boletim b\r\non a.RA = b.RA\r\nwhere b.RA =a.RA AND b.Materia = @materia\r\norder by a.Sala, a.Nome", conexao);
+                comandos.Parameters.AddWithValue("@materia", materia);
+                var da = new MySqlDataAdapter();
 
                 da.SelectCommand = comandos;
 
@@ -141,13 +143,13 @@ namespace ProjetoEscola.CSql
 
                 
 
-                comandos = new MySqlCommand("SELECT * FROM boletim WHERE RA LIKE @ra and Materia LIKE @materia ;", connAberta);
+                comandos = new MySqlCommand("SELECT * FROM boletim WHERE RA LIKE @ra and Materia LIKE @materia;", connAberta);
                 comandos.Parameters.AddWithValue("@ra", ra);
-                //comandos.Parameters.AddWithValue("@materia", at.materia);
+                
 
 
 
-                MySqlDataAdapter da = new MySqlDataAdapter();
+                var da = new MySqlDataAdapter();
 
                 da.SelectCommand = comandos;
 
@@ -156,6 +158,44 @@ namespace ProjetoEscola.CSql
                 if (dr.HasRows)
                 {
                     TemNoBanco = true;
+                }
+
+            }
+            catch (MySqlException) { this.menssagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+
+            return TemNoBanco;
+        }
+
+        public bool VerificarBoletim( int ra, string materia)
+        {
+            try
+            {
+                conexao = new MySqlConnection(servidor);
+
+                con.AbrirConexao();
+                var connAberta = con.AbrirConexao();
+
+
+
+                comandos = new MySqlCommand("SELECT * FROM boletim WHERE RA LIKE @ra and Materia LIKE @materia;", connAberta);
+                comandos.Parameters.AddWithValue("@ra", ra);
+                comandos.Parameters.AddWithValue("@materia", materia);
+
+
+
+                var da = new MySqlDataAdapter();
+
+                da.SelectCommand = comandos;
+
+                dr = comandos.ExecuteReader();
+
+                if (dr.HasRows)
+                {
+                    TemNoBanco = true;
+                }
+                else
+                {
+                    TemNoBanco = false;
                 }
 
             }

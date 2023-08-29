@@ -8,7 +8,7 @@ namespace ProjetoEscola.Entidades
 {
     public class BoletimAluno: Aluno
     {
-        public string Materia { get; set; }
+        public string? Materia { get; set; }
         public double N1 { get; set; }
 
         public double N2 { get; set; }
@@ -19,7 +19,7 @@ namespace ProjetoEscola.Entidades
 
         public double Media { get; set; }
 
-        public string Resultado { get; set; }
+        public string? Resultado { get; set; }
 
     }
 }

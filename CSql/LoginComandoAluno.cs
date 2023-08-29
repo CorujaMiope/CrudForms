@@ -9,23 +9,23 @@ using Microsoft.VisualBasic.Logging;
 
 namespace ProjetoEscola.CSql
 {
-    public class LoginComandoAluno: IVerificarUsuarios
+    public class LoginComandoAluno: IVerificarSeExiste
     {
-        string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
-        MySqlConnection conexao = null;
-        MySqlCommand comandos;
-        MySqlDataReader dr;
-        Conexao con = new Conexao();
+        readonly string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
+        
+        MySqlCommand? comandos;
+        MySqlDataReader? dr;
+        readonly Conexao con = new();
 
 
         public bool TemNoBanco;
         public string? mensagem;
 
-        public bool VerificarLogin(string login, string senha)
+        public bool Verificar(string login, string senha)
         {
             try
             {
-                conexao = new MySqlConnection(servidor);
+                MySqlConnection conexao = new(servidor);
 
                 con.AbrirConexao();
                 var connAberta = con.AbrirConexao();
@@ -35,9 +35,10 @@ namespace ProjetoEscola.CSql
                 comandos.Parameters.AddWithValue("@senha", senha);
 
 
-                MySqlDataAdapter da = new MySqlDataAdapter();
-
-                da.SelectCommand = comandos;
+                var da = new MySqlDataAdapter
+                {
+                    SelectCommand = comandos
+                };
 
                 dr = comandos.ExecuteReader();
 
@@ -56,19 +57,20 @@ namespace ProjetoEscola.CSql
         {
             try
             {
-                conexao = new MySqlConnection(servidor);
+                MySqlConnection conexao = new(servidor);
 
                 con.AbrirConexao();
                 var connAberta = con.AbrirConexao();
 
                 comandos = new MySqlCommand("SELECT * FROM alunos WHERE RA LIKE @ra", connAberta);
                 comandos.Parameters.AddWithValue("@ra", ra);
-                
 
 
-                MySqlDataAdapter da = new MySqlDataAdapter();
 
-                da.SelectCommand = comandos;
+                MySqlDataAdapter da = new()
+                {
+                    SelectCommand = comandos
+                };
 
                 dr = comandos.ExecuteReader();
 

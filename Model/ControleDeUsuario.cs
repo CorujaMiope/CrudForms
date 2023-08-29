@@ -15,9 +15,10 @@ namespace ProjetoEscola.Model
         {
             try
             {
-                LoginComandoProf logComando = new LoginComandoProf();
+                var logComando = new LoginComandoProf();
 
-                TemUsuario = logComando.VerificarLogin(email, senha);
+                TemUsuario = logComando.Verificar(email, senha);
+                
 
             }
             catch (Exception ) { throw; }
@@ -31,7 +32,7 @@ namespace ProjetoEscola.Model
             {
                 var aluno = new LoginComandoAluno();
 
-                TemUsuario = aluno.VerificarLogin(email, senha);
+                TemUsuario = aluno.Verificar(email, senha);
 
             }catch (Exception ) { throw; }
 

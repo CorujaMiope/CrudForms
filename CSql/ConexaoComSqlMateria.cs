@@ -10,10 +10,10 @@ namespace ProjetoEscola.CSql
 {
     public class ConexaoComSqlMateria
     {
-        string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
-        MySqlConnection conexao = null;
-        MySqlCommand comandos;
-        Conexao con = new Conexao();
+        readonly string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
+        MySqlConnection? conexao = null;
+        MySqlCommand? comandos;
+        readonly Conexao con = new();
 
         public DataTable ListarMaterias()
         {
@@ -26,11 +26,12 @@ namespace ProjetoEscola.CSql
 
                 comandos = new MySqlCommand("SELECT * FROM Materias", conexao);
 
-                MySqlDataAdapter da = new MySqlDataAdapter();
+                MySqlDataAdapter da = new()
+                {
+                    SelectCommand = comandos
+                };
 
-                da.SelectCommand = comandos;
-
-                DataTable dtMaterias = new DataTable();
+                DataTable dtMaterias = new();
 
                 da.Fill(dtMaterias);
 

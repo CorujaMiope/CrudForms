@@ -19,7 +19,7 @@ namespace ProjetoEscola.PonteDados
         {
             try
             {
-                DataTable dataTable = new DataTable();
+                DataTable dataTable = new();
 
                 dataTable = ListarDados();
 

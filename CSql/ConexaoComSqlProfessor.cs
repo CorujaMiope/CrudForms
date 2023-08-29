@@ -13,11 +13,11 @@ namespace ProjetoEscola.CSql
     public class ConexaoComSqlProfessor: IExecutavel<Professor>
     {
 
-        string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
-        MySqlConnection conexao = null;
-        MySqlCommand comandos;
-        MySqlDataReader dr;
-        Conexao con = new Conexao();
+        readonly string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
+        MySqlConnection? conexao = null;
+        MySqlCommand? comandos;
+        MySqlDataReader? dr;
+        readonly Conexao con = new();
 
         public bool TemNoBanco;
         public string? mensagem;
@@ -36,11 +36,12 @@ namespace ProjetoEscola.CSql
 
                 comandos = new MySqlCommand("SELECT * FROM professor order by Nome", conexao);
 
-                MySqlDataAdapter da = new MySqlDataAdapter();
+                var da = new MySqlDataAdapter
+                {
+                    SelectCommand = comandos
+                };
 
-                da.SelectCommand = comandos;
-
-                DataTable dtProfs = new DataTable();
+                DataTable dtProfs = new();
 
                 da.Fill(dtProfs);
 
@@ -121,7 +122,7 @@ namespace ProjetoEscola.CSql
             catch (Exception) { throw; }
         }
 
-        public bool Verificar(int ra)
+        public bool Verificar(int id)
         {
 
 
@@ -132,14 +133,15 @@ namespace ProjetoEscola.CSql
                 con.AbrirConexao();
                 var connAberta = con.AbrirConexao();
 
-                comandos = new MySqlCommand("SELECT * FROM alunos WHERE RA LIKE @ra", connAberta);
-                comandos.Parameters.AddWithValue("@ra", ra);
+                comandos = new MySqlCommand("SELECT * FROM professor WHERE Id LIKE @id", connAberta);
+                comandos.Parameters.AddWithValue("@id", id);
 
 
 
-                MySqlDataAdapter da = new MySqlDataAdapter();
-
-                da.SelectCommand = comandos;
+                var da = new MySqlDataAdapter
+                {
+                    SelectCommand = comandos
+                };
 
                 dr = comandos.ExecuteReader();
 
@@ -153,5 +155,7 @@ namespace ProjetoEscola.CSql
 
             return TemNoBanco;
         }
+
+        
     }
 }

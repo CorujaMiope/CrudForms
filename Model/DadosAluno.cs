@@ -11,14 +11,27 @@ namespace ProjetoEscola.PonteDados
 {
     public class DadosAluno
     {
-        ConexaoComSqlAlunos bancoAlunos = new ConexaoComSqlAlunos();
+        readonly ConexaoComSqlAlunos bancoAlunos = new();
 
         public DataTable Listar()
         {
             try
             {
-                DataTable dataTable = new DataTable();
+                var dataTable = new DataTable();
                 dataTable = bancoAlunos.ListarDados();
+
+                return dataTable;
+
+            }catch (Exception ) { throw; }
+        }
+
+        public DataTable ListaBasica()
+        {
+            try
+            {
+                var dataTable = new DataTable();
+
+                dataTable = bancoAlunos.ListarDadosBasicos();
 
                 return dataTable;
 

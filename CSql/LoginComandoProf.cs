@@ -23,6 +23,7 @@ namespace ProjetoEscola.CSql
         public static string? Materia;
         public static string? Id;
         public static string? DataDeNascimento;
+        public static string? Sexo;
         public bool TemNoBanco;
         public string? mensagem;
 
@@ -53,6 +54,7 @@ namespace ProjetoEscola.CSql
                     Materia = dr["Materia"].ToString();
                     DataDeNascimento = dr["Nascimento"].ToString();
                     Id = dr["Id"].ToString();
+                    Sexo = dr["Sexo"].ToString();
                 }
             
 

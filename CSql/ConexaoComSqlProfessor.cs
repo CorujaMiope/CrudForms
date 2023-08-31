@@ -50,7 +50,7 @@ namespace ProjetoEscola.CSql
                 return dtProfs;
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
         }
 
         
@@ -77,7 +77,7 @@ namespace ProjetoEscola.CSql
                 comandos.Dispose();
 
 
-            }catch (Exception) { throw; }
+            }catch { throw; }
             finally
             {
                 con.FecharConexao();
@@ -104,7 +104,7 @@ namespace ProjetoEscola.CSql
                 
 
             }
-            catch (Exception) { throw; };
+            catch { throw; };
         }
 
         public void Excluir(Professor professor)
@@ -119,7 +119,7 @@ namespace ProjetoEscola.CSql
                 comandos.ExecuteNonQuery();
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
         }
 
         public bool Verificar(int id)
@@ -151,7 +151,7 @@ namespace ProjetoEscola.CSql
                 }
 
             }
-            catch (MySqlException) { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+            catch { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
 
             return TemNoBanco;
         }

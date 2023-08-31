@@ -41,7 +41,7 @@ namespace ProjetoEscola.CSql
                 return dtAlunos;
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
         }
 
         public void Salvar(Aluno aluno)
@@ -61,7 +61,7 @@ namespace ProjetoEscola.CSql
 
                 comandos.ExecuteNonQuery();
             }
-            catch (Exception ex) { MessageBox.Show("Erro ao salvar" + ex); }
+            catch { MessageBox.Show("Erro ao salvar"); }
         }
 
         public void Editar(Aluno aluno)
@@ -83,7 +83,7 @@ namespace ProjetoEscola.CSql
                 comandos.ExecuteNonQuery();
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
 
 
         }
@@ -100,7 +100,7 @@ namespace ProjetoEscola.CSql
                 comandos.ExecuteNonQuery();
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
         }
 
         public bool Verificar(int ra)
@@ -132,7 +132,7 @@ namespace ProjetoEscola.CSql
                 }
 
             }
-            catch (MySqlException) { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+            catch { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
 
             return TemNoBanco;
         }
@@ -161,7 +161,7 @@ namespace ProjetoEscola.CSql
                 return dtAlunos;
 
             }
-            catch (Exception) { throw; }
+            catch{ throw; }
         }
     }
 }

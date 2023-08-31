@@ -25,6 +25,7 @@ namespace ProjetoEscola.CSql
         public bool TemNoBanco;
         public string? menssagem;
         string? materia = AreaDoProfessor.materia;
+        public static DataTable? BoletimDoAluno { get; set; }
 
         public DataTable ListarDados()
         {
@@ -49,7 +50,7 @@ namespace ProjetoEscola.CSql
                 return TabelaDeNotas;
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
         }
 
         public void Salvar(BoletimAluno boletim)
@@ -78,7 +79,7 @@ namespace ProjetoEscola.CSql
 
                 conexao.Dispose();
             }
-            catch (Exception) { MessageBox.Show("Não foi possivel salvar as notas do aluno(a)"); return; }
+            catch { MessageBox.Show("Não foi possivel salvar as notas do aluno(a)"); return; }
 
         }
 
@@ -107,7 +108,7 @@ namespace ProjetoEscola.CSql
                 MessageBox.Show("Nota editada com sucesso");
 
             }
-            catch (Exception) { MessageBox.Show("Não foi possivel Editar as notas do aluno(a)"); }
+            catch { MessageBox.Show("Não foi possivel Editar as notas do aluno(a)"); }
         }
 
         public void Excluir(BoletimAluno boletim)
@@ -128,9 +129,10 @@ namespace ProjetoEscola.CSql
 
                 comandos.ExecuteNonQuery();
             }
-            catch (Exception) { MessageBox.Show("Não foi possivel excluir as notas"); }
+            catch { MessageBox.Show("Não foi possivel excluir as notas"); }
         }
 
+        //Aqui o programa vai especificar um aluno especifico
         public bool Verificar(int ra)
         
         {
@@ -143,25 +145,28 @@ namespace ProjetoEscola.CSql
 
                 
 
-                comandos = new MySqlCommand("SELECT * FROM boletim WHERE RA LIKE @ra and Materia LIKE @materia;", connAberta);
+                comandos = new MySqlCommand("SELECT Materia, Nota1, Nota2, Nota3, Nota4, NotaFinal, Resultado FROM boletim WHERE RA LIKE @ra;", connAberta);
                 comandos.Parameters.AddWithValue("@ra", ra);
                 
 
-
-
                 var da = new MySqlDataAdapter();
 
-                da.SelectCommand = comandos;
+                da.SelectCommand = comandos;              
+
+                BoletimDoAluno = new DataTable();
+
+                da.Fill(BoletimDoAluno);
 
                 dr = comandos.ExecuteReader();
+               
 
                 if (dr.HasRows)
                 {
                     TemNoBanco = true;
-                }
+                }               
 
             }
-            catch (MySqlException) { this.menssagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+            catch { this.menssagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
 
             return TemNoBanco;
         }
@@ -199,7 +204,7 @@ namespace ProjetoEscola.CSql
                 }
 
             }
-            catch (MySqlException) { this.menssagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+            catch { this.menssagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
 
             return TemNoBanco;
         }

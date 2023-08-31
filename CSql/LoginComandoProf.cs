@@ -71,7 +71,7 @@ namespace ProjetoEscola.CSql
 
                 
             }
-            catch (MySqlException) { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+            catch { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
 
             return TemNoBanco;
         }

@@ -21,7 +21,7 @@ namespace ProjetoEscola
 
                 return conn;
             }
-            catch (Exception )  { throw; }
+            catch { throw; }
         }
 
         public void FecharConexao()
@@ -32,7 +32,7 @@ namespace ProjetoEscola
                 conexao = new MySqlConnection(servidor);
                 conexao.Close();
             }
-            catch (Exception) { throw; }
+            catch { throw; }
 
            
         }

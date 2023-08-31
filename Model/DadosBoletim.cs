@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using ProjetoEscola.CSql;
 using ProjetoEscola.JanelaAluno.Boletim;
 using ProjetoEscola.Entidades;
+using ProjetoEscola.Interface;
 
 namespace ProjetoEscola.Model
 {
-    public class DadosBoletim
+    public class DadosBoletim: IExecutavel<BoletimAluno>
     {
         readonly ConexaoComSqlBoletim notas = new();
-        public DataTable Listar()
+        public DataTable ListarDados()
         {
             try
             {
@@ -62,7 +63,14 @@ namespace ProjetoEscola.Model
             
         }
 
-        public bool Verificar(int ra, string materia)
+        public bool Verificar(int ra)
+        {
+            bool vr = notas.Verificar(ra);
+
+            return vr;
+        }
+
+        public bool VerificarAlunoEmateria(int ra, string materia)
         {
             bool vr = notas.VerificarBoletim(ra, materia);
 

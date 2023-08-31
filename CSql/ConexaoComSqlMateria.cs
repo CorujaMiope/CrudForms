@@ -40,7 +40,7 @@ namespace ProjetoEscola.CSql
                 return dtMaterias;
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
         }
     }
 }

@@ -21,6 +21,10 @@ namespace ProjetoEscola.CSql
         public bool TemNoBanco;
         public string? mensagem;
 
+        public static string? Nome;
+        public static string? RA;
+        public static string? Sala;
+
         public bool Verificar(string login, string senha)
         {
             try
@@ -47,8 +51,15 @@ namespace ProjetoEscola.CSql
                     TemNoBanco = true;
                 }
 
+                if (dr.Read())
+                {
+                    Nome = dr["Nome"].ToString();
+                    Sala = dr["Sala"].ToString();
+                    RA = dr["RA"].ToString();
+                }
+
             }
-            catch (MySqlException) { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+            catch { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
 
             return TemNoBanco;
         }
@@ -80,7 +91,7 @@ namespace ProjetoEscola.CSql
                 }
 
             }
-            catch (MySqlException) { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+            catch { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
 
             return TemNoBanco;
         }

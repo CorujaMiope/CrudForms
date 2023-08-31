@@ -15,7 +15,7 @@ namespace ProjetoEscola.CSql
         readonly string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
         MySqlCommand? comandos;
         MySqlDataReader? dr;
-        MySqlConnection? conexao = null;
+        readonly MySqlConnection? conexao = null;
         MySqlDataAdapter? da;
         readonly Conexao con = new();
 

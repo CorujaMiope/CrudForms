@@ -11,13 +11,29 @@ namespace ProjetoEscola.Model
     {
         public bool TemUsuario;
         public string? mensagem;
+
+        public bool AcessarAdiministrador(string email, string senha)
+        {
+            try
+            {
+                var admin = new LoginComandoAdmin();
+
+                TemUsuario = admin.AcessarAdmin(email, senha);
+
+
+            }
+            catch (Exception) { throw; }
+
+            return TemUsuario;
+        }
+
         public bool  AcessarProfessor( string email, string senha)
         {
             try
             {
-                var logComando = new LoginComandoProf();
+                var professor = new LoginComandoProf();
 
-                TemUsuario = logComando.Verificar(email, senha);
+                TemUsuario = professor.Verificar(email, senha);
                 
 
             }
@@ -38,6 +54,7 @@ namespace ProjetoEscola.Model
 
             return TemUsuario;
         }
+
     }
 
 }

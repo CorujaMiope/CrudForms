@@ -10,7 +10,6 @@ namespace ProjetoEscola.Entidades
     public class Professor: Pessoa
     {
        
-
         public int ID { get; set; }    
         public string Materia { get; set; }
         public string Usuario { get; set; }

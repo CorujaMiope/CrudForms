@@ -9,11 +9,11 @@ namespace ProjetoEscola.Entidades
 {
     public class Aluno: Pessoa
     {
-
         public int RA { get; set; }
-        public string Sala { get; set; }
-        public string Usuario { get; set; }
-        public string Senha { get; set; }
+        public string? Sala { get; set; }
+        public string? Usuario { get; set; }
+        public string? Senha { get; set; }
 
+       
     }
 }

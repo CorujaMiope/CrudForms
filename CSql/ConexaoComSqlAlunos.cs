@@ -51,6 +51,7 @@ namespace ProjetoEscola.CSql
                 var connAberta = con.AbrirConexao();
 
                 comandos = new MySqlCommand("INSERT INTO alunos VALUES (@ra, @nome, @sexo, @nascimento, @sala, @login, @senha)", connAberta);
+
                 comandos.Parameters.AddWithValue("@ra", aluno.RA);
                 comandos.Parameters.AddWithValue("@nome", aluno.Nome);
                 comandos.Parameters.AddWithValue("@sexo", aluno.Sexo);

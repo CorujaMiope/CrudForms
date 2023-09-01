@@ -32,8 +32,6 @@ C:\Users\Dell\source\repos\ProjetoEscola\ProjetoEscola\obj\Debug\net7.0-windows\
 C:\Users\Dell\source\repos\ProjetoEscola\ProjetoEscola\obj\Debug\net7.0-windows\ProjetoEscola.JanelaProfessor.AdmProfessor.resources
 C:\Users\Dell\source\repos\ProjetoEscola\ProjetoEscola\obj\Debug\net7.0-windows\ProjetoEscola.JanelaAluno.Boletim.AtribuirNota.resources
 C:\Users\Dell\source\repos\ProjetoEscola\ProjetoEscola\obj\Debug\net7.0-windows\ProjetoEscola.MenuPrincipal.resources
-C:\Users\Dell\source\repos\ProjetoEscola\ProjetoEscola\obj\Debug\net7.0-windows\ProjetoEscola.View.MenuUsuarioAluno.resources
-C:\Users\Dell\source\repos\ProjetoEscola\ProjetoEscola\obj\Debug\net7.0-windows\ProjetoEscola.View.MenuUsuarioProfessor.resources
 C:\Users\Dell\source\repos\ProjetoEscola\ProjetoEscola\obj\Debug\net7.0-windows\ProjetoEscola.View.AreaDoProfessor.resources
 C:\Users\Dell\source\repos\ProjetoEscola\ProjetoEscola\obj\Debug\net7.0-windows\ProjetoEscola.View.AreaDoAluno.resources
 C:\Users\Dell\source\repos\ProjetoEscola\ProjetoEscola\obj\Debug\net7.0-windows\ProjetoEscola.View.AreaDoAdm.resources

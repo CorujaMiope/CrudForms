@@ -22,11 +22,5 @@
     <Compile Update="View\AdmAlunos.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="View\MenuUsuarioAluno.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="View\MenuUsuarioProfessor.cs">
-      <SubType>Form</SubType>
-    </Compile>
   </ItemGroup>
 </Project>

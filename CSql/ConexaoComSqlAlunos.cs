@@ -71,17 +71,61 @@ namespace ProjetoEscola.CSql
             {
                 var connAberta = con.AbrirConexao();
 
-                comandos = new MySqlCommand("UPDATE alunos SET Nome = @nome, Sexo = @sexo, Nascimento = @nascimento, Sala = @sala, Login = @login, Senha = @senha WHERE RA = @ra", connAberta);
+                if (!string.IsNullOrEmpty(aluno.Nome))
+                {
+                    comandos = new MySqlCommand("UPDATE alunos SET Nome = @nome WHERE RA = @ra", connAberta);
 
-                comandos.Parameters.AddWithValue("@ra", aluno.RA);
-                comandos.Parameters.AddWithValue("@nome", aluno.Nome);
-                comandos.Parameters.AddWithValue("@sexo", aluno.Sexo);
-                comandos.Parameters.AddWithValue("@nascimento", aluno.Nascimento);
-                comandos.Parameters.AddWithValue("@sala", aluno.Sala);
-                comandos.Parameters.AddWithValue("@login", aluno.Usuario);
-                comandos.Parameters.AddWithValue("senha", aluno.Senha);
+                    comandos.Parameters.AddWithValue("@ra", aluno.RA);
+                    comandos.Parameters.AddWithValue("@nome", aluno.Nome);
+                    comandos.ExecuteNonQuery();
+                }
 
-                comandos.ExecuteNonQuery();
+                if(!string.IsNullOrEmpty(aluno.Sexo))
+                {
+                    comandos = new MySqlCommand("UPDATE alunos SET Sexo = @sexo WHERE RA = @ra", connAberta);
+
+                    comandos.Parameters.AddWithValue("@ra", aluno.RA);
+                    comandos.Parameters.AddWithValue("@sexo", aluno.Sexo);
+                    comandos.ExecuteNonQuery();
+                }
+
+                if(!string.IsNullOrEmpty((aluno.Nascimento.ToString())))
+                {
+                    comandos = new MySqlCommand("UPDATE alunos SET Nascimento = @nascimento WHERE RA = @ra", connAberta);
+
+                    comandos.Parameters.AddWithValue("@ra", aluno.RA);
+                    comandos.Parameters.AddWithValue("@nascimento", aluno.Nascimento);
+                    comandos.ExecuteNonQuery();
+                }
+
+                if(!string.IsNullOrEmpty(aluno.Sala))
+                {
+                    comandos = new MySqlCommand("UPDATE alunos SET Sala = @sala WHERE RA = @ra", connAberta);
+
+                    comandos.Parameters.AddWithValue("@ra", aluno.RA);
+                    comandos.Parameters.AddWithValue("@sala", aluno.Sala);
+                    comandos.ExecuteNonQuery();
+                }
+                
+                if(!string.IsNullOrEmpty(aluno.Usuario))
+                {
+                    comandos = new MySqlCommand("UPDATE alunos SET Login = @login WHERE RA = @ra", connAberta);
+                    
+                    comandos.Parameters.AddWithValue("@ra", aluno.RA);
+                    comandos.Parameters.AddWithValue("@login", aluno.Usuario);
+                    comandos.ExecuteNonQuery();
+                }
+                
+                if(!string.IsNullOrEmpty(aluno.Senha))
+                {
+                    comandos = new MySqlCommand("UPDATE alunos SET Senha = @senha WHERE RA = @ra", connAberta);
+
+                    comandos.Parameters.AddWithValue("@ra", aluno.RA);
+                    comandos.Parameters.AddWithValue("senha", aluno.Senha);
+                    comandos.ExecuteNonQuery();
+                }                                         
+
+                
 
             }
             catch { throw; }

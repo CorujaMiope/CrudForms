@@ -35,3 +35,4 @@ C:\Users\Dell\source\repos\ProjetoEscola\ProjetoEscola\obj\Debug\net7.0-windows\
 C:\Users\Dell\source\repos\ProjetoEscola\ProjetoEscola\obj\Debug\net7.0-windows\ProjetoEscola.View.AreaDoProfessor.resources
 C:\Users\Dell\source\repos\ProjetoEscola\ProjetoEscola\obj\Debug\net7.0-windows\ProjetoEscola.View.AreaDoAluno.resources
 C:\Users\Dell\source\repos\ProjetoEscola\ProjetoEscola\obj\Debug\net7.0-windows\ProjetoEscola.View.AreaDoAdm.resources
+C:\Users\Dell\source\repos\ProjetoEscola\ProjetoEscola\obj\Debug\net7.0-windows\ProjetoEscola.Properties.Resources.resources

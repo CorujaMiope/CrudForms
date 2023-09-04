@@ -91,15 +91,53 @@ namespace ProjetoEscola.CSql
             { 
                 var connAberta = con.AbrirConexao();
 
-                comandos = new MySqlCommand("UPDATE professor SET   Nome = @nome , Sexo =  @sexo, Nascimento =  @nascimento, Materia = @materia, Login = @login, Senha = @senha WHERE Id = @id", connAberta);
-                comandos.Parameters.AddWithValue("@id",professor.ID);
-                comandos.Parameters.AddWithValue("@nome", professor.Nome);
-                comandos.Parameters.AddWithValue("@sexo", professor.Sexo);
-                comandos.Parameters.AddWithValue("@nascimento", professor.Nascimento);
-                comandos.Parameters.AddWithValue("@materia", professor.Materia);
-                comandos.Parameters.AddWithValue("@login", professor.Usuario);
-                comandos.Parameters.AddWithValue("@senha", professor.Senha);
+                if (!string.IsNullOrEmpty(professor.Nome))
+                {
+                    comandos = new MySqlCommand("UPDATE professor SET Nome = @nome WHERE Id = @id", connAberta);
 
+                    comandos.Parameters.AddWithValue("@id", professor.ID);
+                    comandos.Parameters.AddWithValue("@nome", professor.Nome);
+                }
+                if (!string.IsNullOrEmpty(professor.Nascimento.ToString()))
+                {
+                    comandos = new MySqlCommand("UPDATE professor SET Nascimento =  @nascimento WHERE Id = @id", connAberta);
+
+                    comandos.Parameters.AddWithValue("@id", professor.ID);
+                    comandos.Parameters.AddWithValue("@nascimento", professor.Nascimento);
+                }
+
+                if(!string.IsNullOrEmpty(professor.Sexo))
+                {
+                    comandos = new MySqlCommand("UPDATE professor SET Sexo = @sexo WHERE Id = @id", connAberta);
+
+                    comandos.Parameters.AddWithValue("@id", professor.ID);
+                    comandos.Parameters.AddWithValue("@sexo", professor.Sexo);
+                }
+                
+                if(!string.IsNullOrEmpty(professor.Materia))
+                {
+                    comandos = new MySqlCommand("UPDATE professor SET Materia = @materia WHERE Id = @id", connAberta);
+
+                    comandos.Parameters.AddWithValue("@id", professor.ID);
+                    comandos.Parameters.AddWithValue("@materia", professor.Materia);
+                }
+                
+                if(!string.IsNullOrEmpty(professor.Usuario))
+                {
+                    comandos = new MySqlCommand("UPDATE professor SET  Login = @login WHERE Id = @id", connAberta);
+
+                    comandos.Parameters.AddWithValue("@id", professor.ID);
+                    comandos.Parameters.AddWithValue("@login", professor.Usuario);
+                }
+
+                if (!string.IsNullOrEmpty(professor.Senha))
+                {
+                    comandos = new MySqlCommand("UPDATE professor SET  Senha = @senha WHERE Id = @id", connAberta);
+
+                    comandos.Parameters.AddWithValue("@id", professor.ID);
+                    comandos.Parameters.AddWithValue("@senha", professor.Senha);
+                }
+ 
                 comandos.ExecuteNonQuery();
                 
 

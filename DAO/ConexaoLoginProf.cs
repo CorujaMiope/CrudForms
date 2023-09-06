@@ -10,7 +10,7 @@ using ProjetoEscola.Entidades;
 
 namespace ProjetoEscola.CSql
 {
-    public class LoginComandoProf : IVerificarSeExiste
+    public class ConexaoLoginProf : ILogin
     {
         readonly string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
         MySqlCommand? comandos;

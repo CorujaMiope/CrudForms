@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoEscola.Interface
 {
-    public interface IExecutavel <T>
+    public interface ICrud <T>
     {
         public DataTable ListarDados();
 

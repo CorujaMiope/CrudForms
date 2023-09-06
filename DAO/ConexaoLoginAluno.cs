@@ -9,7 +9,7 @@ using Microsoft.VisualBasic.Logging;
 
 namespace ProjetoEscola.CSql
 {
-    public class LoginComandoAluno: IVerificarSeExiste
+    public class ConexaoLoginAluno: ILogin
     {
         readonly string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
         

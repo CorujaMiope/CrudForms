@@ -10,7 +10,7 @@ using ProjetoEscola.Entidades;
 
 namespace ProjetoEscola.PonteDados
 {
-    public class DadosProfessor: ConexaoComSqlProfessor
+    public class ModelProfessor: ConexoProfessor
      
     {
        

@@ -10,7 +10,7 @@ using ProjetoEscola.Interface;
 
 namespace ProjetoEscola.CSql
 {
-    public class LoginComandoAdmin
+    public class ConexaoLoginAdmin
     {
         readonly string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
         MySqlDataAdapter da;

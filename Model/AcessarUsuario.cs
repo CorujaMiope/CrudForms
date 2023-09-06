@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoEscola.Model
 {
-    public class ControleDeUsuario
+    public class AcessarUsuario
     {
         public bool TemUsuario;
         public string? mensagem;
@@ -16,7 +16,7 @@ namespace ProjetoEscola.Model
         {
             try
             {
-                var admin = new LoginComandoAdmin();
+                var admin = new ConexaoLoginAdmin();
 
                 TemUsuario = admin.AcessarAdmin(email, senha);
 
@@ -31,7 +31,7 @@ namespace ProjetoEscola.Model
         {
             try
             {
-                var professor = new LoginComandoProf();
+                var professor = new ConexaoLoginProf();
 
                 TemUsuario = professor.Verificar(email, senha);
                 
@@ -46,7 +46,7 @@ namespace ProjetoEscola.Model
         {
             try
             {
-                var aluno = new LoginComandoAluno();
+                var aluno = new ConexaoLoginAluno();
 
                 TemUsuario = aluno.Verificar(email, senha);
 

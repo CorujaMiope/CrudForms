@@ -9,9 +9,9 @@ using ProjetoEscola.Entidades;
 
 namespace ProjetoEscola.PonteDados
 {
-    public class DadosAluno
+    public class ModelAluno
     {
-        readonly ConexaoComSqlAlunos bancoAlunos = new();
+        readonly ConexaoAlunos bancoAlunos = new();
 
         public DataTable Listar()
         {

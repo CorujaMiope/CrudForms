@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoEscola.CSql
 {
-    public class ConexaoComSqlBoletim: IExecutavel<BoletimAluno>
+    public class ConexaoBoletim: ICrud<BoletimAluno>
     {
         string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
         MySqlConnection? conexao = null;

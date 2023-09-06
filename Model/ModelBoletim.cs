@@ -11,9 +11,9 @@ using ProjetoEscola.Interface;
 
 namespace ProjetoEscola.Model
 {
-    public class DadosBoletim: IExecutavel<BoletimAluno>
+    public class ModelBoletim: ICrud<BoletimAluno>
     {
-        readonly ConexaoComSqlBoletim notas = new();
+        readonly ConexaoBoletim notas = new();
         public DataTable ListarDados()
         {
             try

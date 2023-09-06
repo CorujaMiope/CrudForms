@@ -6,7 +6,7 @@ using System.Data;
 
 namespace ProjetoEscola.CSql
 {
-    public class ConexaoComSqlAlunos : IExecutavel<Aluno>
+    public class ConexaoAlunos : ICrud<Aluno>
     {
         readonly string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
         MySqlConnection? conexao = null;

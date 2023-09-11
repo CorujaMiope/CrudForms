@@ -142,7 +142,7 @@ namespace ProjetoEscola.CSql
                 
 
             }
-            catch { throw; };
+            catch { throw; }
         }
 
         public void Excluir(Professor professor)
@@ -163,9 +163,9 @@ namespace ProjetoEscola.CSql
         public bool Verificar(int id)
         {
 
-
             try
             {
+                
                 conexao = new MySqlConnection(servidor);
 
                 con.AbrirConexao();
@@ -185,13 +185,17 @@ namespace ProjetoEscola.CSql
 
                 if (dr.HasRows)
                 {
-                    TemNoBanco = true;
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
 
             }
             catch { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
 
-            return TemNoBanco;
+           
         }
 
         

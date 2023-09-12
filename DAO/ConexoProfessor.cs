@@ -97,6 +97,8 @@ namespace ProjetoEscola.CSql
 
                     comandos.Parameters.AddWithValue("@id", professor.ID);
                     comandos.Parameters.AddWithValue("@nome", professor.Nome);
+
+                    comandos.ExecuteNonQuery();
                 }
                 if (!string.IsNullOrEmpty(professor.Nascimento.ToString()))
                 {
@@ -104,6 +106,8 @@ namespace ProjetoEscola.CSql
 
                     comandos.Parameters.AddWithValue("@id", professor.ID);
                     comandos.Parameters.AddWithValue("@nascimento", professor.Nascimento);
+
+                    comandos.ExecuteNonQuery();
                 }
 
                 if(!string.IsNullOrEmpty(professor.Sexo))
@@ -112,6 +116,8 @@ namespace ProjetoEscola.CSql
 
                     comandos.Parameters.AddWithValue("@id", professor.ID);
                     comandos.Parameters.AddWithValue("@sexo", professor.Sexo);
+
+                    comandos.ExecuteNonQuery();
                 }
                 
                 if(!string.IsNullOrEmpty(professor.Materia))
@@ -120,6 +126,8 @@ namespace ProjetoEscola.CSql
 
                     comandos.Parameters.AddWithValue("@id", professor.ID);
                     comandos.Parameters.AddWithValue("@materia", professor.Materia);
+
+                    comandos.ExecuteNonQuery();
                 }
                 
                 if(!string.IsNullOrEmpty(professor.Usuario))
@@ -128,6 +136,8 @@ namespace ProjetoEscola.CSql
 
                     comandos.Parameters.AddWithValue("@id", professor.ID);
                     comandos.Parameters.AddWithValue("@login", professor.Usuario);
+
+                    comandos.ExecuteNonQuery();
                 }
 
                 if (!string.IsNullOrEmpty(professor.Senha))
@@ -136,9 +146,11 @@ namespace ProjetoEscola.CSql
 
                     comandos.Parameters.AddWithValue("@id", professor.ID);
                     comandos.Parameters.AddWithValue("@senha", professor.Senha);
+
+                    comandos.ExecuteNonQuery();
                 }
  
-                comandos.ExecuteNonQuery();
+                
                 
 
             }

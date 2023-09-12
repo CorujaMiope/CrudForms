@@ -69,7 +69,7 @@ namespace ProjetoEscola.PonteDados
 
         public bool Verificar(int ra)
         {
-           bool vr = bancoAlunos.Verificar(ra);
+           bool vr = bancoAlunos.VerificarRa(ra);
 
             return vr;
         }

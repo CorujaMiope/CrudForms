@@ -12,13 +12,13 @@ namespace ProjetoEscola.Model
         public bool TemUsuario;
         public string? mensagem;
 
-        public bool AcessarAdiministrador(string email, string senha)
+        public bool AcessarAdiministrador(string email)
         {
             try
             {
                 var admin = new ConexaoLoginAdmin();
 
-                TemUsuario = admin.AcessarAdmin(email, senha);
+                TemUsuario = admin.AcessarAdmin(email);
 
 
             }
@@ -27,13 +27,28 @@ namespace ProjetoEscola.Model
             return TemUsuario;
         }
 
-        public bool  AcessarProfessor( string email, string senha)
+        public bool VerificarAdiministrador(string email, string senha)
+        {
+            try
+            {
+                var admin = new ConexaoLoginAdmin();
+
+                TemUsuario = admin.VerificarAdmin(email, senha);
+
+
+            }
+            catch (Exception) { throw; }
+
+            return TemUsuario;
+        }
+
+        public bool  AcessarProfessor( string email)
         {
             try
             {
                 var professor = new ConexaoLoginProf();
 
-                TemUsuario = professor.Verificar(email, senha);
+                TemUsuario = professor.AcessarAluno(email);
                 
 
             }
@@ -41,16 +56,46 @@ namespace ProjetoEscola.Model
 
             return TemUsuario;
         }
-        
-        public bool AcessarAluno(string email, string senha)
+
+        public bool VerificarProfessor(string email, string senha)
+        {
+            try
+            {
+                var admin = new ConexaoLoginProf();
+
+                TemUsuario = admin.VerificarProf(email, senha);
+
+
+            }
+            catch (Exception) { throw; }
+
+            return TemUsuario;
+        }
+
+        public bool AcessarAluno(string email)
         {
             try
             {
                 var aluno = new ConexaoLoginAluno();
 
-                TemUsuario = aluno.Verificar(email, senha);
+                TemUsuario = aluno.AcessarAluno(email);
 
             }catch (Exception ) { throw; }
+
+            return TemUsuario;
+        }
+
+        public bool VerificarAluno(string email, string senha)
+        {
+            try
+            {
+                var admin = new ConexaoLoginAluno();
+
+                TemUsuario = admin.VerificarAluno(email, senha);
+
+
+            }
+            catch (Exception) { throw; }
 
             return TemUsuario;
         }

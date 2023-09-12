@@ -160,7 +160,7 @@ namespace ProjetoEscola.CSql
             catch { throw; }
         }
 
-        public bool Verificar(int id)
+        public bool VerificarRa(int id)
         {
 
             try

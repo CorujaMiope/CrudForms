@@ -18,7 +18,7 @@ namespace ProjetoEscola.Interface
 
         public void Excluir(T entidade);
 
-        public bool Verificar(int T);
+        public bool VerificarRa(int T);
         
     }
 }

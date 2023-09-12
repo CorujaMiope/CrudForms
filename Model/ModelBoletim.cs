@@ -63,9 +63,9 @@ namespace ProjetoEscola.Model
             
         }
 
-        public bool Verificar(int ra)
+        public bool VerificarRa(int ra)
         {
-            bool vr = notas.Verificar(ra);
+            bool vr = notas.VerificarRa(ra);
 
             return vr;
         }

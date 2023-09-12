@@ -133,7 +133,7 @@ namespace ProjetoEscola.CSql
         }
 
         //Aqui o programa vai especificar um aluno especifico
-        public bool Verificar(int ra)
+        public bool VerificarRa(int ra)
         
         {
             try

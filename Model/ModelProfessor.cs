@@ -64,7 +64,7 @@ namespace ProjetoEscola.PonteDados
         {
             try
             {
-                bool vr = Verificar(id);
+                bool vr = VerificarRa(id);
 
                 return vr;
 

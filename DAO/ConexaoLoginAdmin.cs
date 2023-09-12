@@ -19,7 +19,7 @@ namespace ProjetoEscola.CSql
         Conexao con = new();
         MySqlCommand? comandos;
 
-        public bool AcessarAdmin(string email, string senha)
+        public bool AcessarAdmin(string email)
         {
             try
             {
@@ -30,9 +30,9 @@ namespace ProjetoEscola.CSql
                 var connAberta = con.AbrirConexao();
                 
 
-                comandos = new MySqlCommand("SELECT * FROM Diretor WHERE login = @log AND senha = @sen",connAberta);
+                comandos = new MySqlCommand("SELECT * FROM Diretor WHERE login = @log",connAberta);
                 comandos.Parameters.AddWithValue("@log", email);
-                comandos.Parameters.AddWithValue("@sen", senha);
+                
 
                 comandos.ExecuteNonQuery();
 
@@ -60,6 +60,50 @@ namespace ProjetoEscola.CSql
                 con.FecharConexao();
             }
             
+        }
+
+        public bool VerificarAdmin(string email, string senha)
+        {
+            try
+            {
+                bool TemNoBanco;
+
+                conexao = new(servidor);
+                con.AbrirConexao();
+                var connAberta = con.AbrirConexao();
+
+
+                comandos = new MySqlCommand("SELECT * FROM Diretor WHERE login = @log AND senha = @senha", connAberta);
+                comandos.Parameters.AddWithValue("@log", email);
+                comandos.Parameters.AddWithValue("@senha", senha);
+
+                comandos.ExecuteNonQuery();
+
+                da = new MySqlDataAdapter
+                {
+                    SelectCommand = comandos
+                };
+
+                dr = comandos.ExecuteReader();
+
+                if (dr.HasRows)
+                {
+                    TemNoBanco = true;
+                }
+                else
+                {
+                    TemNoBanco = false;
+                }
+
+                return TemNoBanco;
+
+            }
+            catch { throw; }
+            finally
+            {
+                con.FecharConexao();
+            }
+
         }
 
     }

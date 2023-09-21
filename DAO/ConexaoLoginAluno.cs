@@ -9,7 +9,7 @@ using Microsoft.VisualBasic.Logging;
 
 namespace ProjetoEscola.CSql
 {
-    public class LoginComandoAluno: IVerificarSeExiste
+    public class ConexaoLoginAluno: ILogin
     {
         readonly string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
         
@@ -25,7 +25,41 @@ namespace ProjetoEscola.CSql
         public static string? RA;
         public static string? Sala;
 
-        public bool Verificar(string login, string senha)
+        public bool AcessarAluno(string login)
+        {
+            try
+            {
+                MySqlConnection conexao = new(servidor);
+
+                con.AbrirConexao();
+                var connAberta = con.AbrirConexao();
+
+                comandos = new MySqlCommand("SELECT * FROM alunos WHERE Login = @login", connAberta);
+                comandos.Parameters.AddWithValue("@login", login);
+                
+
+
+                var da = new MySqlDataAdapter
+                {
+                    SelectCommand = comandos
+                };
+
+                dr = comandos.ExecuteReader();
+
+                if (dr.HasRows)
+                {
+                    TemNoBanco = true;
+                }
+
+                
+
+            }
+            catch { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+
+            return TemNoBanco;
+        }
+
+        public bool VerificarAluno(string login, string senha)
         {
             try
             {
@@ -64,36 +98,6 @@ namespace ProjetoEscola.CSql
             return TemNoBanco;
         }
 
-        public bool VerificarRA(int ra)
-        {
-            try
-            {
-                MySqlConnection conexao = new(servidor);
-
-                con.AbrirConexao();
-                var connAberta = con.AbrirConexao();
-
-                comandos = new MySqlCommand("SELECT * FROM alunos WHERE RA LIKE @ra", connAberta);
-                comandos.Parameters.AddWithValue("@ra", ra);
-
-
-
-                MySqlDataAdapter da = new()
-                {
-                    SelectCommand = comandos
-                };
-
-                dr = comandos.ExecuteReader();
-
-                if (dr.HasRows)
-                {
-                    TemNoBanco = true;
-                }
-
-            }
-            catch { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
-
-            return TemNoBanco;
-        }
+        
     }
 }

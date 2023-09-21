@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using ProjetoEscola.Interface;
 using System.Data;
 using ProjetoEscola.Entidades;
+using Microsoft.VisualBasic.Logging;
 
 namespace ProjetoEscola.CSql
 {
-    public class LoginComandoProf : IVerificarSeExiste
+    public class ConexaoLoginProf : ILogin
     {
         readonly string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
         MySqlCommand? comandos;
@@ -27,7 +28,7 @@ namespace ProjetoEscola.CSql
         public bool TemNoBanco;
         public string? mensagem;
 
-        public bool Verificar(string login, string senha)
+        public bool AcessarAluno(string login)
         {
             
             try
@@ -37,9 +38,9 @@ namespace ProjetoEscola.CSql
                 con.AbrirConexao();
                 var connAberta = con.AbrirConexao();
 
-                comandos = new MySqlCommand("SELECT * FROM professor WHERE Login = @login AND Senha = @senha", connAberta);
+                comandos = new MySqlCommand("SELECT * FROM professor WHERE Login = @login", connAberta);
                 comandos.Parameters.AddWithValue("@login", login);
-                comandos.Parameters.AddWithValue("@senha", senha);
+                
 
                 MySqlDataAdapter? da = new()
                 {
@@ -48,7 +49,41 @@ namespace ProjetoEscola.CSql
 
                 dr = comandos.ExecuteReader();
 
-                if(dr.Read())
+ 
+                if (dr.HasRows)
+                {
+                     TemNoBanco = true;
+
+                }               
+                
+            }
+            catch { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+
+            return TemNoBanco;
+        }
+
+        internal bool VerificarProf(string email, string senha)
+        {
+            try
+            {
+                MySqlConnection conexao = new(servidor);
+
+                con.AbrirConexao();
+                var connAberta = con.AbrirConexao();
+
+                comandos = new MySqlCommand("SELECT * FROM professor WHERE Login = @login AND Senha = @senha", connAberta);
+                comandos.Parameters.AddWithValue("@login", email);
+                comandos.Parameters.AddWithValue("@senha", senha);
+
+
+                MySqlDataAdapter? da = new()
+                {
+                    SelectCommand = comandos
+                };
+
+                dr = comandos.ExecuteReader();
+
+                if (dr.Read())
                 {
                     Nome = dr["Nome"].ToString();
                     Materia = dr["Materia"].ToString();
@@ -56,25 +91,17 @@ namespace ProjetoEscola.CSql
                     Id = dr["Id"].ToString();
                     Sexo = dr["Sexo"].ToString();
                 }
-            
-
-
-
 
                 if (dr.HasRows)
                 {
-                     TemNoBanco = true;
+                    TemNoBanco = true;
 
                 }
 
-               
-
-                
             }
             catch { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
 
             return TemNoBanco;
         }
-      
     }
 }

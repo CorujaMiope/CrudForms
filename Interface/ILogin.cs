@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ProjetoEscola.Interface
 {
-    public interface IVerificarSeExiste
+    public interface ILogin
     {
-        public bool Verificar( string login, string senha);
+        public bool AcessarAluno( string login);
 
         
     }

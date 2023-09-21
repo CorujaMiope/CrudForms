@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoEscola.Interface
 {
-    public interface IExecutavel <T>
+    public interface ICrud <T>
     {
         public DataTable ListarDados();
 
@@ -18,7 +18,7 @@ namespace ProjetoEscola.Interface
 
         public void Excluir(T entidade);
 
-        public bool Verificar(int T);
+        public bool VerificarRa(int T);
         
     }
 }

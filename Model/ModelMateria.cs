@@ -8,9 +8,9 @@ using ProjetoEscola.CSql;
 
 namespace ProjetoEscola.PonteDados
 {
-    public class DadosMateria
+    public class ModelMateria
     {
-        ConexaoComSqlMateria mt = new ConexaoComSqlMateria(); 
+        ConexaoMateria mt = new ConexaoMateria(); 
         public DataTable ListaDeMateria()
         {
             try

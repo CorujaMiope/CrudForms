@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoEscola.CSql
 {
-    public class ConexaoComSqlBoletim: IExecutavel<BoletimAluno>
+    public class ConexaoBoletim: ICrud<BoletimAluno>
     {
         string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
         MySqlConnection? conexao = null;
@@ -133,7 +133,7 @@ namespace ProjetoEscola.CSql
         }
 
         //Aqui o programa vai especificar um aluno especifico
-        public bool Verificar(int ra)
+        public bool VerificarRa(int ra)
         
         {
             try

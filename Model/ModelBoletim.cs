@@ -11,9 +11,9 @@ using ProjetoEscola.Interface;
 
 namespace ProjetoEscola.Model
 {
-    public class DadosBoletim: IExecutavel<BoletimAluno>
+    public class ModelBoletim: ICrud<BoletimAluno>
     {
-        readonly ConexaoComSqlBoletim notas = new();
+        readonly ConexaoBoletim notas = new();
         public DataTable ListarDados()
         {
             try
@@ -63,9 +63,9 @@ namespace ProjetoEscola.Model
             
         }
 
-        public bool Verificar(int ra)
+        public bool VerificarRa(int ra)
         {
-            bool vr = notas.Verificar(ra);
+            bool vr = notas.VerificarRa(ra);
 
             return vr;
         }

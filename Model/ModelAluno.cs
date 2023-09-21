@@ -9,9 +9,9 @@ using ProjetoEscola.Entidades;
 
 namespace ProjetoEscola.PonteDados
 {
-    public class DadosAluno
+    public class ModelAluno
     {
-        readonly ConexaoComSqlAlunos bancoAlunos = new();
+        readonly ConexaoAlunos bancoAlunos = new();
 
         public DataTable Listar()
         {
@@ -69,7 +69,7 @@ namespace ProjetoEscola.PonteDados
 
         public bool Verificar(int ra)
         {
-           bool vr = bancoAlunos.Verificar(ra);
+           bool vr = bancoAlunos.VerificarRa(ra);
 
             return vr;
         }

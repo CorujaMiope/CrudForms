@@ -4,12 +4,13 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProjetoEscola.CSql;
+using ProjetoEscola.DAO;
 using ProjetoEscola.Entidades;
+using ProjetoEscola.Interface;
 
 namespace ProjetoEscola.PonteDados
 {
-    public class ModelAluno
+    public class ModelAluno: IPersistenciaDeDados<Aluno>
     {
         readonly ConexaoAlunos bancoAlunos = new();
 
@@ -18,7 +19,7 @@ namespace ProjetoEscola.PonteDados
             try
             {
                 var dataTable = new DataTable();
-                dataTable = bancoAlunos.ListarDados();
+                dataTable = bancoAlunos.Listar();
 
                 return dataTable;
 
@@ -31,9 +32,7 @@ namespace ProjetoEscola.PonteDados
             {
                 var dataTable = new DataTable();
 
-                dataTable = bancoAlunos.ListarDadosBasicos();
-
-                return dataTable;
+                return dataTable = bancoAlunos.ListarDadosBasicos();            
 
             }catch (Exception ) { throw; }
         }
@@ -67,11 +66,11 @@ namespace ProjetoEscola.PonteDados
            
         }
 
-        public bool Verificar(int ra)
+        public bool VerificarIdentificador(int ra)
         {
-           bool vr = bancoAlunos.VerificarRa(ra);
+           bool veriicar = bancoAlunos.VerificarIdentificador(ra);
 
-            return vr;
+            return veriicar;
         }
     }
 }

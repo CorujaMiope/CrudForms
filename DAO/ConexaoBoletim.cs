@@ -11,11 +11,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjetoEscola.CSql
+namespace ProjetoEscola.DAO
 {
-    public class ConexaoBoletim: ICrud<BoletimAluno>
+    public class ConexaoBoletim: IPersistenciaDeDados<BoletimAluno>
     {
-        string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
+        string servidor = "SERVER=localhost;DATABASE=SistemaEscolar;UID=root;PWD=; Persist Security Info=True;database=SistemaEscolar;Convert Zero Datetime=True";
         MySqlConnection? conexao = null;
         MySqlCommand? comandos;
         MySqlDataReader? dr;
@@ -27,7 +27,7 @@ namespace ProjetoEscola.CSql
         string? materia = AreaDoProfessor.materia;
         public static DataTable? BoletimDoAluno { get; set; }
 
-        public DataTable ListarDados()
+        public DataTable Listar()
         {
             try
             {
@@ -51,6 +51,10 @@ namespace ProjetoEscola.CSql
 
             }
             catch { throw; }
+            finally
+            {
+                con.FecharConexao();
+            }
         }
 
         public void Salvar(BoletimAluno boletim)
@@ -80,6 +84,10 @@ namespace ProjetoEscola.CSql
                 conexao.Dispose();
             }
             catch { MessageBox.Show("Não foi possivel salvar as notas do aluno(a)"); return; }
+            finally
+            {
+                con.FecharConexao();
+            }
 
         }
 
@@ -105,10 +113,14 @@ namespace ProjetoEscola.CSql
 
                 comandos.ExecuteNonQuery();
 
-                MessageBox.Show("Nota editada com sucesso");
+                
 
             }
             catch { MessageBox.Show("Não foi possivel Editar as notas do aluno(a)"); }
+            finally
+            {
+                con.FecharConexao();
+            }
         }
 
         public void Excluir(BoletimAluno boletim)
@@ -124,16 +136,18 @@ namespace ProjetoEscola.CSql
                 comandos = new MySqlCommand("DELETE FROM Boletim WHERE RA = @ra AND Materia = @materia", connAberta);
                 comandos.Parameters.AddWithValue("@ra", boletim.RA);
                 comandos.Parameters.AddWithValue("@materia", boletim.Materia);
-
-                MessageBox.Show("Notas excluidas com sucesso");
-
+              
                 comandos.ExecuteNonQuery();
             }
             catch { MessageBox.Show("Não foi possivel excluir as notas"); }
+            finally
+            {
+                con.FecharConexao();
+            }
         }
 
         //Aqui o programa vai especificar um aluno especifico
-        public bool VerificarRa(int ra)
+        public bool VerificarIdentificador(int ra)
         
         {
             try
@@ -167,6 +181,10 @@ namespace ProjetoEscola.CSql
 
             }
             catch { this.menssagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+            finally
+            {
+                con.FecharConexao();
+            }
 
             return TemNoBanco;
         }
@@ -180,13 +198,9 @@ namespace ProjetoEscola.CSql
                 con.AbrirConexao();
                 var connAberta = con.AbrirConexao();
 
-
-
                 comandos = new MySqlCommand("SELECT * FROM boletim WHERE RA LIKE @ra and Materia LIKE @materia;", connAberta);
                 comandos.Parameters.AddWithValue("@ra", ra);
                 comandos.Parameters.AddWithValue("@materia", materia);
-
-
 
                 var da = new MySqlDataAdapter();
 
@@ -196,17 +210,19 @@ namespace ProjetoEscola.CSql
 
                 if (dr.HasRows)
                 {
-                    TemNoBanco = true;
+                    return TemNoBanco = true;
                 }
                 else
                 {
-                    TemNoBanco = false;
+                    return TemNoBanco = false;
                 }
 
             }
             catch { this.menssagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
-
-            return TemNoBanco;
+            finally
+            {
+                con.FecharConexao();
+            }          
         }
     }
 }

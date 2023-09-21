@@ -4,22 +4,20 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProjetoEscola.CSql;
+using ProjetoEscola.DAO;
 
 namespace ProjetoEscola.PonteDados
 {
     public class ModelMateria
     {
-        ConexaoMateria mt = new ConexaoMateria(); 
+        ConexaoMateria conexaoBoletim = new ConexaoMateria(); 
         public DataTable ListaDeMateria()
         {
             try
             {
                 DataTable dataMateria = new DataTable();
 
-                dataMateria = mt.ListarMaterias();
-
-                return dataMateria;
+                return dataMateria = conexaoBoletim.ListarMaterias();              
 
             }
             catch (Exception) { throw; }

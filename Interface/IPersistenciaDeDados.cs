@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ProjetoEscola.Interface
 {
-    public interface ICrud <T>
+    public interface IPersistenciaDeDados<T>
     {
-        public DataTable ListarDados();
+        public DataTable Listar();
 
         public void Salvar(T entidade);
 
@@ -18,7 +18,7 @@ namespace ProjetoEscola.Interface
 
         public void Excluir(T entidade);
 
-        public bool VerificarRa(int T);
+        public bool VerificarIdentificador(int T);
         
     }
 }

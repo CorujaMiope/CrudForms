@@ -4,24 +4,26 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProjetoEscola.CSql;
+
 using ProjetoEscola.Entidades;
+using ProjetoEscola.Interface;
+using ProjetoEscola.DAO;
 
 
 namespace ProjetoEscola.PonteDados
 {
-    public class ModelProfessor: ConexoProfessor
+    public class ModelProfessor:IPersistenciaDeDados<Professor>
      
     {
-       
-
-        public DataTable ListarProfessor()
+       ConexoProfessor conexaoProf = new ConexoProfessor();
+        public DataTable Listar()
         {
             try
             {
+               
                 DataTable dataTable = new();
 
-                dataTable = ListarDados();
+                dataTable = conexaoProf.Listar();
 
                 return dataTable;
 
@@ -29,44 +31,44 @@ namespace ProjetoEscola.PonteDados
             catch (Exception) { throw; }
         }
 
-        public void SalvarPof(Professor professor)
+        public void Salvar(Professor professor)
         {
             try
             {
-                Salvar(professor);
+                conexaoProf.Salvar(professor);
 
             }
             catch (Exception) { throw; }
         }
 
-        public void EditarProf(Professor professor)
+        public void Editar(Professor professor)
         {
             try
             {
-                Editar(professor);
+                conexaoProf.Editar(professor);
 
             }
             catch (Exception) { throw; }
         }
 
-        public void ExcluirProf(Professor professor)
+        public void Excluir(Professor professor)
         {
             try
             {
-                Excluir(professor);
+                conexaoProf.Excluir(professor);
 
             }
             catch (Exception) { throw; }
 
         }
 
-        public bool VerificarID(int id)
+        public bool VerificarIdentificador(int id)
         {
             try
             {
-                bool vr = VerificarRa(id);
+                bool verificar = conexaoProf.VerificarIdentificador(id);
 
-                return vr;
+                return verificar;
 
             }catch (Exception) { throw; }
         }

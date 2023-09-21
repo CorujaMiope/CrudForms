@@ -4,23 +4,25 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProjetoEscola.CSql;
+using ProjetoEscola.DAO;
 using ProjetoEscola.JanelaAluno.Boletim;
 using ProjetoEscola.Entidades;
 using ProjetoEscola.Interface;
 
 namespace ProjetoEscola.Model
 {
-    public class ModelBoletim: ICrud<BoletimAluno>
+    public class ModelBoletim: IPersistenciaDeDados<BoletimAluno>
     {
+        bool verificar;
+
         readonly ConexaoBoletim notas = new();
-        public DataTable ListarDados()
+        public DataTable Listar()
         {
             try
             {
                 DataTable ListarNotas = new();
 
-                ListarNotas = notas.ListarDados();
+                ListarNotas = notas.Listar();
 
                 return ListarNotas;
 
@@ -63,18 +65,15 @@ namespace ProjetoEscola.Model
             
         }
 
-        public bool VerificarRa(int ra)
+        public bool VerificarIdentificador(int ra)
         {
-            bool vr = notas.VerificarRa(ra);
-
-            return vr;
+            return verificar = notas.VerificarIdentificador(ra);
         }
 
         public bool VerificarAlunoEmateria(int ra, string materia)
         {
-            bool vr = notas.VerificarBoletim(ra, materia);
+            return verificar = notas.VerificarBoletim(ra, materia);
 
-            return vr;
         }
 
 

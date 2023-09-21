@@ -8,11 +8,11 @@ using MySql.Data;
 using ProjetoEscola.Interface;
 
 
-namespace ProjetoEscola.CSql
+namespace ProjetoEscola.DAO
 {
     public class ConexaoLoginAdmin
     {
-        readonly string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
+        readonly string servidor = "SERVER=localhost;DATABASE=SistemaEscolar;UID=root;PWD=; Persist Security Info=True;database=SistemaEscolar;Convert Zero Datetime=True";
         MySqlDataAdapter da;
         MySqlDataReader dr;
         MySqlConnection? conexao;
@@ -30,7 +30,7 @@ namespace ProjetoEscola.CSql
                 var connAberta = con.AbrirConexao();
                 
 
-                comandos = new MySqlCommand("SELECT * FROM Diretor WHERE login = @log",connAberta);
+                comandos = new MySqlCommand("SELECT * FROM Diretor WHERE Login = @log",connAberta);
                 comandos.Parameters.AddWithValue("@log", email);
                 
 
@@ -73,7 +73,7 @@ namespace ProjetoEscola.CSql
                 var connAberta = con.AbrirConexao();
 
 
-                comandos = new MySqlCommand("SELECT * FROM Diretor WHERE login = @log AND senha = @senha", connAberta);
+                comandos = new MySqlCommand("SELECT * FROM Diretor WHERE Login = @log AND Senha = @senha", connAberta);
                 comandos.Parameters.AddWithValue("@log", email);
                 comandos.Parameters.AddWithValue("@senha", senha);
 

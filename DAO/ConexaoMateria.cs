@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjetoEscola.CSql
+namespace ProjetoEscola.DAO
 {
     public class ConexaoMateria
     {
-        readonly string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
+        readonly string servidor = "SERVER=localhost;DATABASE=SistemaEscolar;UID=root;PWD=; Persist Security Info=True;database=SistemaEscolar;Convert Zero Datetime=True";
         MySqlConnection? conexao = null;
         MySqlCommand? comandos;
         readonly Conexao con = new();
@@ -24,7 +24,7 @@ namespace ProjetoEscola.CSql
 
                  con.AbrirConexao();
 
-                comandos = new MySqlCommand("SELECT * FROM Materias", conexao);
+                comandos = new MySqlCommand("SELECT * FROM Materias order by Materia", conexao);
 
                 MySqlDataAdapter da = new()
                 {
@@ -41,6 +41,10 @@ namespace ProjetoEscola.CSql
 
             }
             catch { throw; }
+            finally
+            {
+                con.FecharConexao();
+            }
         }
     }
 }

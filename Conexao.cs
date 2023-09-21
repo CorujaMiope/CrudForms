@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ProjetoEscola
 {
-    internal class Conexao
+    public class Conexao
     {
-        readonly string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
+        readonly string servidor = "SERVER=localhost;DATABASE=SistemaEscolar;UID=root;PWD=; Persist Security Info=True;database=SistemaEscolar;Convert Zero Datetime=True";
         public MySqlConnection? conexao;
 
         public MySqlConnection AbrirConexao()
@@ -21,7 +21,7 @@ namespace ProjetoEscola
 
                 return conn;
             }
-            catch { throw; }
+            catch (MySqlException ex) { throw; MessageBox.Show("Erro" + ex.Message);  }
         }
 
         public void FecharConexao()

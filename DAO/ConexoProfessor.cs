@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 using ProjetoEscola.Entidades;
 using ProjetoEscola.Interface;
 
-namespace ProjetoEscola.CSql
+namespace ProjetoEscola.DAO
 {
-    public class ConexoProfessor: ICrud<Professor>
+    public class ConexoProfessor: IPersistenciaDeDados<Professor>
     {
 
-        readonly string servidor = "SERVER=localhost;DATABASE=escola;UID=root;PWD=; Persist Security Info=True;database=escola;Convert Zero Datetime=True";
+        readonly string servidor = "SERVER=localhost;DATABASE=SistemaEscolar;UID=root;PWD=; Persist Security Info=True;database=SistemaEscolar;Convert Zero Datetime=True";
         MySqlConnection? conexao = null;
         MySqlCommand? comandos;
         MySqlDataReader? dr;
@@ -24,7 +24,7 @@ namespace ProjetoEscola.CSql
 
 
 
-        public DataTable ListarDados()
+        public DataTable Listar()
         {
             try
             {
@@ -51,6 +51,10 @@ namespace ProjetoEscola.CSql
 
             }
             catch { throw; }
+            finally
+            {
+                con.FecharConexao();
+            }
         }
 
         
@@ -132,7 +136,7 @@ namespace ProjetoEscola.CSql
                 
                 if(!string.IsNullOrEmpty(professor.Usuario))
                 {
-                    comandos = new MySqlCommand("UPDATE professor SET  Login = @login WHERE Id = @id", connAberta);
+                    comandos = new MySqlCommand("UPDATE professor SET  Usuario = @login WHERE Id = @id", connAberta);
 
                     comandos.Parameters.AddWithValue("@id", professor.ID);
                     comandos.Parameters.AddWithValue("@login", professor.Usuario);
@@ -155,6 +159,10 @@ namespace ProjetoEscola.CSql
 
             }
             catch { throw; }
+            finally
+            {
+                con.FecharConexao();
+            }
         }
 
         public void Excluir(Professor professor)
@@ -170,9 +178,13 @@ namespace ProjetoEscola.CSql
 
             }
             catch { throw; }
+            finally
+            {
+                con.FecharConexao();
+            }
         }
 
-        public bool VerificarRa(int id)
+        public bool VerificarIdentificador(int id)
         {
 
             try
@@ -206,8 +218,12 @@ namespace ProjetoEscola.CSql
 
             }
             catch { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+            finally
+            {
+                con.FecharConexao();
+            }
 
-           
+
         }
 
         

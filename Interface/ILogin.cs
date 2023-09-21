@@ -8,7 +8,7 @@ namespace ProjetoEscola.Interface
 {
     public interface ILogin
     {
-        public bool AcessarAluno( string login);
+        public bool AcessaUsuarios( string login);
 
         
     }

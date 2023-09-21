@@ -1,4 +1,4 @@
-﻿using ProjetoEscola.CSql;
+﻿using ProjetoEscola.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +18,13 @@ namespace ProjetoEscola.Model
             {
                 var admin = new ConexaoLoginAdmin();
 
-                TemUsuario = admin.AcessarAdmin(email);
+                return TemUsuario = admin.AcessarAdmin(email);
 
 
             }
             catch (Exception) { throw; }
-
-            return TemUsuario;
+            
+            
         }
 
         public bool VerificarAdiministrador(string email, string senha)
@@ -33,13 +33,13 @@ namespace ProjetoEscola.Model
             {
                 var admin = new ConexaoLoginAdmin();
 
-                TemUsuario = admin.VerificarAdmin(email, senha);
+                return TemUsuario = admin.VerificarAdmin(email, senha);
 
 
             }
             catch (Exception) { throw; }
 
-            return TemUsuario;
+            
         }
 
         public bool  AcessarProfessor( string email)
@@ -48,13 +48,13 @@ namespace ProjetoEscola.Model
             {
                 var professor = new ConexaoLoginProf();
 
-                TemUsuario = professor.AcessarAluno(email);
+                return TemUsuario = professor.AcessaUsuarios(email);
                 
 
             }
             catch (Exception ) { throw; }
 
-            return TemUsuario;
+            
         }
 
         public bool VerificarProfessor(string email, string senha)
@@ -63,13 +63,13 @@ namespace ProjetoEscola.Model
             {
                 var admin = new ConexaoLoginProf();
 
-                TemUsuario = admin.VerificarProf(email, senha);
+               return TemUsuario = admin.VerificarProf(email, senha);
 
 
             }
             catch (Exception) { throw; }
 
-            return TemUsuario;
+            
         }
 
         public bool AcessarAluno(string email)
@@ -78,11 +78,11 @@ namespace ProjetoEscola.Model
             {
                 var aluno = new ConexaoLoginAluno();
 
-                TemUsuario = aluno.AcessarAluno(email);
+                return TemUsuario = aluno.AcessaUsuarios(email);
 
             }catch (Exception ) { throw; }
 
-            return TemUsuario;
+            
         }
 
         public bool VerificarAluno(string email, string senha)
@@ -91,13 +91,13 @@ namespace ProjetoEscola.Model
             {
                 var admin = new ConexaoLoginAluno();
 
-                TemUsuario = admin.VerificarAluno(email, senha);
+                return TemUsuario = admin.VerificarAluno(email, senha);
 
 
             }
             catch (Exception) { throw; }
 
-            return TemUsuario;
+            
         }
 
     }

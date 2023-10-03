@@ -63,7 +63,7 @@ namespace ProjetoEscola.Model
             {
                 var admin = new ConexaoLoginProf();
 
-               return TemUsuario = admin.VerificarProf(email, senha);
+               return TemUsuario = admin.VerificarSeExistUsuario(email, senha);
 
 
             }
@@ -91,7 +91,7 @@ namespace ProjetoEscola.Model
             {
                 var admin = new ConexaoLoginAluno();
 
-                return TemUsuario = admin.VerificarAluno(email, senha);
+                return TemUsuario = admin.VerificarSeExistUsuario(email, senha);
 
 
             }

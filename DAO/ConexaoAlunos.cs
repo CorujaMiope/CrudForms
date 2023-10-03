@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using ProjetoEscola.Entidades;
 using ProjetoEscola.Interface;
+using ProjetoEscola.ViewModel;
 using System.Data;
 
 
@@ -16,29 +17,41 @@ namespace ProjetoEscola.DAO
 
         public bool temNoBanco;
         public string? mensagem;
+        
+        public static List <Aluno> alunos = new List<Aluno>();
 
-        public DataTable Listar()
+        
+        public List<Aluno> Listar()
         {
             try
             {
-                con.AbrirConexao();
+                var connAberta =con.AbrirConexao();
 
-                conexao = new MySqlConnection(servidor);
+             
 
-                comandos = new MySqlCommand("SELECT * FROM alunos order by Sala,Nome", conexao);
+                comandos = new MySqlCommand("SELECT * FROM alunos order by Sala,Nome", connAberta);
 
-                var da = new MySqlDataAdapter
+                dr = comandos.ExecuteReader();
+                
+                
+
+                while (dr.Read())
                 {
-                    SelectCommand = comandos
-                };
+                  
+                    int ra = Convert.ToInt32(dr["RA"]);
+                    string nome = dr["Nome"].ToString();
+                    DateTime nascimento = Convert.ToDateTime(dr["Nascimento"]);
+                    string sexo = dr["Sexo"].ToString();
+                    string sala = dr["sala"].ToString();
+                    string usuario = dr["Usuario"].ToString();
+                    string senha = dr["Senha"].ToString();
+                    
+                    Aluno aluno = new Aluno(ra, nome, nascimento, sexo, sala, usuario, senha);
 
-                DataTable dtAlunos = new();
+                    alunos.Add(aluno);
+                }
 
-                da.Fill(dtAlunos);
-
-                con.FecharConexao();
-
-                return dtAlunos;
+                return alunos;
 
             }
             catch { throw; }
@@ -54,7 +67,8 @@ namespace ProjetoEscola.DAO
             {
                 var connAberta = con.AbrirConexao();
 
-                comandos = new MySqlCommand("INSERT INTO alunos VALUES (@ra, @nome, @sexo, @nascimento, @sala, @login, @senha)", connAberta);
+                comandos = new MySqlCommand(@"INSERT INTO alunos 
+                                            VALUES (@ra, @nome, @sexo, @nascimento, @sala, @login, MD5(@senha))", connAberta);
 
                 comandos.Parameters.AddWithValue("@ra", aluno.RA);
                 comandos.Parameters.AddWithValue("@nome", aluno.Nome);
@@ -66,7 +80,7 @@ namespace ProjetoEscola.DAO
 
                 comandos.ExecuteNonQuery();
             }
-            catch { MessageBox.Show("Erro ao salvar"); }
+            catch { throw; }
 
         }
 
@@ -76,62 +90,18 @@ namespace ProjetoEscola.DAO
             {
                 var connAberta = con.AbrirConexao();
 
-                if (!string.IsNullOrEmpty(aluno.Nome))
-                {
-                    comandos = new MySqlCommand("UPDATE alunos SET Nome = @nome WHERE RA = @ra", connAberta);
+                comandos = new MySqlCommand(@"UPDATE alunos SET Nome = @nome, Sexo = @sexo, Nascimento = @nascimento, Sala = @sala, Usuario = @usuario, Senha = MD5(@senha) 
+                                            WHERE RA = @ra", connAberta);
 
-                    comandos.Parameters.AddWithValue("@ra", aluno.RA);
-                    comandos.Parameters.AddWithValue("@nome", aluno.Nome);
-                    comandos.ExecuteNonQuery();
-                }
+                comandos.Parameters.AddWithValue("@ra", aluno.RA);
+                comandos.Parameters.AddWithValue("@nome", aluno.Nome);
+                comandos.Parameters.AddWithValue("@sexo", aluno.Sexo);
+                comandos.Parameters.AddWithValue("@nascimento", aluno.Nascimento);
+                comandos.Parameters.AddWithValue("@sala", aluno.Sala);
+                comandos.Parameters.AddWithValue("@usuario", aluno.Usuario);
+                comandos.Parameters.AddWithValue("@senha", aluno.Senha);
 
-                if (!string.IsNullOrEmpty(aluno.Sexo))
-                {
-                    comandos = new MySqlCommand("UPDATE alunos SET Sexo = @sexo WHERE RA = @ra", connAberta);
-
-                    comandos.Parameters.AddWithValue("@ra", aluno.RA);
-                    comandos.Parameters.AddWithValue("@sexo", aluno.Sexo);
-                    comandos.ExecuteNonQuery();
-                }
-
-                if (!string.IsNullOrEmpty((aluno.Nascimento.ToString())))
-                {
-                    comandos = new MySqlCommand("UPDATE alunos SET Nascimento = @nascimento WHERE RA = @ra", connAberta);
-
-                    comandos.Parameters.AddWithValue("@ra", aluno.RA);
-                    comandos.Parameters.AddWithValue("@nascimento", aluno.Nascimento);
-                    comandos.ExecuteNonQuery();
-                }
-
-                if (!string.IsNullOrEmpty(aluno.Sala))
-                {
-                    comandos = new MySqlCommand("UPDATE alunos SET Sala = @sala WHERE RA = @ra", connAberta);
-
-                    comandos.Parameters.AddWithValue("@ra", aluno.RA);
-                    comandos.Parameters.AddWithValue("@sala", aluno.Sala);
-                    comandos.ExecuteNonQuery();
-                }
-
-                if (!string.IsNullOrEmpty(aluno.Usuario))
-                {
-                    comandos = new MySqlCommand("UPDATE alunos SET Usuario = @login WHERE RA = @ra", connAberta);
-
-                    comandos.Parameters.AddWithValue("@ra", aluno.RA);
-                    comandos.Parameters.AddWithValue("@login", aluno.Usuario);
-                    comandos.ExecuteNonQuery();
-                }
-
-                if (!string.IsNullOrEmpty(aluno.Senha))
-                {
-                    comandos = new MySqlCommand("UPDATE alunos SET Senha = @senha WHERE RA = @ra", connAberta);
-
-                    comandos.Parameters.AddWithValue("@ra", aluno.RA);
-                    comandos.Parameters.AddWithValue("senha", aluno.Senha);
-                    comandos.ExecuteNonQuery();
-                }
-
-
-
+                comandos.ExecuteNonQuery();
             }
             catch { throw; }
             finally
@@ -171,7 +141,8 @@ namespace ProjetoEscola.DAO
                 con.AbrirConexao();
                 var connAberta = con.AbrirConexao();
 
-                comandos = new MySqlCommand("SELECT * FROM alunos WHERE RA LIKE @ra", connAberta);
+                comandos = new MySqlCommand(@"SELECT * FROM alunos 
+                                            WHERE RA LIKE @ra", connAberta);
                 comandos.Parameters.AddWithValue("@ra", ra);
 
 
@@ -200,28 +171,30 @@ namespace ProjetoEscola.DAO
 
         }
 
-        public DataTable ListarDadosBasicos()
+        public List<Aluno> ListarDadosBasicos()
         {
             try
             {
-                con.AbrirConexao();
+                List<Aluno> alunoList = new();
 
-                conexao = new MySqlConnection(servidor);
+                var connAberta = con.AbrirConexao();
 
-                comandos = new MySqlCommand("SELECT Sala, Nome, RA FROM alunos order by Sala,Nome", conexao);
+                comandos = new MySqlCommand("SELECT Sala, Nome, RA FROM alunos order by Sala,Nome", connAberta);
+                
+                dr = comandos.ExecuteReader();
 
-                var da = new MySqlDataAdapter
+                while(dr.Read())
                 {
-                    SelectCommand = comandos
-                };
+                    int ra = Convert.ToInt32(dr["RA"]);
+                    string nome = dr["Nome"].ToString();
+                    string sala = dr["Sala"].ToString();
 
-                DataTable dtAlunos = new();
+                    Aluno aluno = new(ra,nome,sala);
 
-                da.Fill(dtAlunos);
+                    alunoList.Add(aluno);
+                }
 
-                con.FecharConexao();
-
-                return dtAlunos;
+                return alunoList;
 
             }
             catch { throw; }
@@ -230,5 +203,7 @@ namespace ProjetoEscola.DAO
                 con.FecharConexao();
             }
         }
+
+        
     }
 }

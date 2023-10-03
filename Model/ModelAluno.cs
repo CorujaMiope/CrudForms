@@ -13,28 +13,26 @@ namespace ProjetoEscola.PonteDados
     public class ModelAluno: IPersistenciaDeDados<Aluno>
     {
         readonly ConexaoAlunos bancoAlunos = new();
+        ConexaoLoginAluno loginAluno = new();
 
-        public DataTable Listar()
+        public List<Aluno> Listar()
         {
             try
             {
-                var dataTable = new DataTable();
-                dataTable = bancoAlunos.Listar();
+                List<Aluno> lista = new List <Aluno>();
 
-                return dataTable;
+                lista = bancoAlunos.Listar();
+
+                return lista;
 
             }catch (Exception ) { throw; }
         }
 
-        public DataTable ListaBasica()
+        public List<Aluno> ListarDadosBasicos()
         {
-            try
-            {
-                var dataTable = new DataTable();
+            List<Aluno> listAluno = new();
 
-                return dataTable = bancoAlunos.ListarDadosBasicos();            
-
-            }catch (Exception ) { throw; }
+            return listAluno = bancoAlunos.ListarDadosBasicos();
         }
 
         public void Salvar(Aluno aluno)
@@ -71,6 +69,11 @@ namespace ProjetoEscola.PonteDados
            bool veriicar = bancoAlunos.VerificarIdentificador(ra);
 
             return veriicar;
+        }
+
+        public bool VerificarUsuarioComRA(string usuario, int ra)
+        {
+            return loginAluno.VarificarUsuarioComRA(usuario, ra);
         }
     }
 }

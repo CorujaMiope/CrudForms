@@ -16,19 +16,32 @@ namespace ProjetoEscola.PonteDados
      
     {
        ConexoProfessor conexaoProf = new ConexoProfessor();
-        public DataTable Listar()
+        public List<Professor> Listar()
         {
             try
             {
                
-                DataTable dataTable = new();
+                List<Professor> listar = new();
 
-                dataTable = conexaoProf.Listar();
+                listar = conexaoProf.Listar();
 
-                return dataTable;
+                return listar;
 
             }
             catch (Exception) { throw; }
+        }
+
+        public List<Professor> ListarProfessor()
+        {
+            
+
+                List<Professor> Lista = new();
+
+                Lista = conexaoProf.Listar();
+
+                return Lista;
+
+            
         }
 
         public void Salvar(Professor professor)
@@ -71,6 +84,13 @@ namespace ProjetoEscola.PonteDados
                 return verificar;
 
             }catch (Exception) { throw; }
+        }
+
+        internal bool VerificarUsuarioComID(string usuario, int id)
+        {
+             ConexaoLoginProf login = new ConexaoLoginProf();
+            
+            return login.VarificarUsuarioComID(usuario, id);
         }
     }
 }

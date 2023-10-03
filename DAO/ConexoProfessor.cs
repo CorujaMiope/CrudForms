@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ProjetoEscola.Entidades;
 using ProjetoEscola.Interface;
+using System.Security.Cryptography;
 
 namespace ProjetoEscola.DAO
 {
@@ -24,28 +25,38 @@ namespace ProjetoEscola.DAO
 
 
 
-        public DataTable Listar()
+
+        public List<Professor> Listar()
         {
             try
             {
 
-                
-                con.AbrirConexao();
 
-                conexao = new MySqlConnection(servidor);
+                var connAberta = con.AbrirConexao();
 
-                comandos = new MySqlCommand("SELECT * FROM professor order by Nome", conexao);
+               
+                comandos = new MySqlCommand("SELECT * FROM professor order by Nome", connAberta);
 
-                var da = new MySqlDataAdapter
+                dr = comandos.ExecuteReader();
+
+                List<Professor> dtProfs = new();
+
+                while(dr.Read())
                 {
-                    SelectCommand = comandos
-                };
+                    int id = Convert.ToInt32(dr["Id"]);
+                    DateTime idade = Convert.ToDateTime(dr["Nascimento"]);
+                    string nome = dr["Nome"].ToString();
+                    string sexo = dr["Sexo"].ToString();
+                    string materia = dr["Materia"].ToString();
+                    string Usuario = dr["Usuario"].ToString();
+                    string Senha = dr["Senha"].ToString();
 
-                DataTable dtProfs = new();
+                    Professor professor = new Professor(id, nome, idade, sexo, materia, Usuario, Senha);
+                                          
+                    dtProfs.Add(professor);
 
-                da.Fill(dtProfs);
-
-
+                      
+                }
 
                 return dtProfs;
 
@@ -57,7 +68,6 @@ namespace ProjetoEscola.DAO
             }
         }
 
-        
 
         public void Salvar( Professor professor)
         { 
@@ -68,7 +78,8 @@ namespace ProjetoEscola.DAO
 
                 
                 
-                comandos = new MySqlCommand("INSERT INTO professor VALUES (@id, @nome, @sexo, @nascimento, @materia, @login, @senha)", connAberta);
+                comandos = new MySqlCommand(@"INSERT INTO professor 
+                                            VALUES (@id, @nome, @sexo, @nascimento, @materia, @login, MD5(@senha))", connAberta);
                 comandos.Parameters.AddWithValue("@id",professor.ID );
                 comandos.Parameters.AddWithValue("@nome", professor.Nome);
                 comandos.Parameters.AddWithValue("@sexo", professor.Sexo);
@@ -93,70 +104,19 @@ namespace ProjetoEscola.DAO
         {
             try
             { 
-                var connAberta = con.AbrirConexao();
-
-                if (!string.IsNullOrEmpty(professor.Nome))
-                {
-                    comandos = new MySqlCommand("UPDATE professor SET Nome = @nome WHERE Id = @id", connAberta);
+                    var connAberta = con.AbrirConexao();
+                
+                    comandos = new MySqlCommand(@"UPDATE professor SET Nome = @nome,  Sexo = @sexo,  Nascimento =  @nascimento, Materia = @materia,  Usuario = @login, Senha = MD5(@senha)  
+                                                WHERE Id = @id", connAberta);
 
                     comandos.Parameters.AddWithValue("@id", professor.ID);
                     comandos.Parameters.AddWithValue("@nome", professor.Nome);
-
-                    comandos.ExecuteNonQuery();
-                }
-                if (!string.IsNullOrEmpty(professor.Nascimento.ToString()))
-                {
-                    comandos = new MySqlCommand("UPDATE professor SET Nascimento =  @nascimento WHERE Id = @id", connAberta);
-
-                    comandos.Parameters.AddWithValue("@id", professor.ID);
-                    comandos.Parameters.AddWithValue("@nascimento", professor.Nascimento);
-
-                    comandos.ExecuteNonQuery();
-                }
-
-                if(!string.IsNullOrEmpty(professor.Sexo))
-                {
-                    comandos = new MySqlCommand("UPDATE professor SET Sexo = @sexo WHERE Id = @id", connAberta);
-
-                    comandos.Parameters.AddWithValue("@id", professor.ID);
                     comandos.Parameters.AddWithValue("@sexo", professor.Sexo);
-
-                    comandos.ExecuteNonQuery();
-                }
-                
-                if(!string.IsNullOrEmpty(professor.Materia))
-                {
-                    comandos = new MySqlCommand("UPDATE professor SET Materia = @materia WHERE Id = @id", connAberta);
-
-                    comandos.Parameters.AddWithValue("@id", professor.ID);
+                    comandos.Parameters.AddWithValue("@nascimento", professor.Nascimento);
                     comandos.Parameters.AddWithValue("@materia", professor.Materia);
-
-                    comandos.ExecuteNonQuery();
-                }
-                
-                if(!string.IsNullOrEmpty(professor.Usuario))
-                {
-                    comandos = new MySqlCommand("UPDATE professor SET  Usuario = @login WHERE Id = @id", connAberta);
-
-                    comandos.Parameters.AddWithValue("@id", professor.ID);
                     comandos.Parameters.AddWithValue("@login", professor.Usuario);
-
-                    comandos.ExecuteNonQuery();
-                }
-
-                if (!string.IsNullOrEmpty(professor.Senha))
-                {
-                    comandos = new MySqlCommand("UPDATE professor SET  Senha = @senha WHERE Id = @id", connAberta);
-
-                    comandos.Parameters.AddWithValue("@id", professor.ID);
                     comandos.Parameters.AddWithValue("@senha", professor.Senha);
-
                     comandos.ExecuteNonQuery();
-                }
- 
-                
-                
-
             }
             catch { throw; }
             finally
@@ -195,7 +155,8 @@ namespace ProjetoEscola.DAO
                 con.AbrirConexao();
                 var connAberta = con.AbrirConexao();
 
-                comandos = new MySqlCommand("SELECT * FROM professor WHERE Id LIKE @id", connAberta);
+                comandos = new MySqlCommand(@"SELECT * FROM professor 
+                                            WHERE Id LIKE @id", connAberta);
                 comandos.Parameters.AddWithValue("@id", id);
 
 

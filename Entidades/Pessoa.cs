@@ -11,8 +11,8 @@ namespace ProjetoEscola.Entidades
        public string Nome { get; set; }
         public DateTime Nascimento { get; set; }
         public string Sexo { get; set; }
-       
-        
+        public string Usuario { get; set; }
+        public string Senha { get; set; }
 
     }
 }

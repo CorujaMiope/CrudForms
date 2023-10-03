@@ -12,8 +12,19 @@ namespace ProjetoEscola.Entidades
        
         public int ID { get; set; }    
         public string Materia { get; set; }
-        public string Usuario { get; set; }
-        public string Senha { get; set; }
         
+
+        public Professor(int iD, string nome, DateTime nascimento, string sexo, string materia, string usuario, string senha)
+        {
+            ID = iD;
+            Nome = nome;
+            Nascimento = nascimento; 
+            Sexo = sexo;
+            Materia = materia;
+            Usuario = usuario;
+            Senha = senha;
+        }
+
+        public Professor() { }
     }
 }

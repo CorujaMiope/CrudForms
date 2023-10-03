@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ProjetoEscola.Interface;
 using Microsoft.VisualBasic.Logging;
+using ProjetoEscola.Windows.CriptografarSenha;
+using System.Drawing.Drawing2D;
 
 namespace ProjetoEscola.DAO
 {
@@ -62,47 +64,59 @@ namespace ProjetoEscola.DAO
 
         }
 
-        public bool VerificarAluno(string login, string senha)
+        string senha2;
+        internal bool VerificarSeExistUsuario(string usuario, string senha1)
         {
+            var cripto = new Criptografar();
+
+            var connAberta = con.AbrirConexao();
+
+            comandos = new MySqlCommand("SELECT * FROM alunos WHERE Usuario = @usuario", connAberta);
+            comandos.Parameters.AddWithValue("@usuario", usuario);
+
+            dr = comandos.ExecuteReader();
+
+            if (dr.Read())
+            {
+                Nome = dr["Nome"].ToString();
+                Sala = dr["Sala"].ToString();
+                RA = dr["RA"].ToString();
+
+                senha2 = dr["Senha"].ToString();
+            }
+
+            var senhaCripto = cripto.CriptografarSenha(senha1);
+
+            return senhaCripto == senha2 ? true : false;
+        }
+
+        public bool VarificarUsuarioComRA(string usuario, int ra)
+        {
+
             try
             {
-                MySqlConnection conexao = new(servidor);
-
-                con.AbrirConexao();
                 var connAberta = con.AbrirConexao();
 
-                comandos = new MySqlCommand("SELECT * FROM alunos WHERE Usuario = @login AND Senha = @senha", connAberta);
-                comandos.Parameters.AddWithValue("@login", login);
-                comandos.Parameters.AddWithValue("@senha", senha);
+                comandos = new MySqlCommand(@"SELECT * FROM alunos
+                                            WHERE Usuario = @usuario
+                                            AND RA = @ra", connAberta);
 
-
-                var da = new MySqlDataAdapter
-                {
-                    SelectCommand = comandos
-                };
+                comandos.Parameters.AddWithValue("@usuario", usuario);
+                comandos.Parameters.AddWithValue("@ra", ra);
 
                 dr = comandos.ExecuteReader();
 
-                if (dr.HasRows)
-                {
-                    TemNoBanco = true;
-                }
+                bool retorno = (dr.HasRows) ? true : false;
 
-                if (dr.Read())
-                {
-                    Nome = dr["Nome"].ToString();
-                    Sala = dr["Sala"].ToString();
-                    RA = dr["RA"].ToString();
-                }
-                
-                return TemNoBanco;
+
+                return retorno;
 
             }
-            catch { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
-            finally
-            {
-                con.FecharConexao();
-            }
-        }    
+            catch { throw; }
+            finally { con.FecharConexao();}
+            
+
+        }
+
     }
 }

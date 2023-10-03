@@ -5,61 +5,64 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ProjetoEscola.DAO;
-using ProjetoEscola.JanelaAluno.Boletim;
+using ProjetoEscola.JanelaAluno.BoletimAluno;
 using ProjetoEscola.Entidades;
 using ProjetoEscola.Interface;
+using ProjetoEscola.ViewModel;
 
 namespace ProjetoEscola.Model
 {
-    public class ModelBoletim: IPersistenciaDeDados<BoletimAluno>
+    public class ModelBoletim: IPersistenciaDeDados<Boletim>
     {
         bool verificar;
 
-        readonly ConexaoBoletim notas = new();
-        public DataTable Listar()
+        readonly ConexaoBoletim boletins = new();
+      
+        public List<AlunoNotasVM> ListarAlunoEspecifico()
         {
             try
             {
-                DataTable ListarNotas = new();
+                List<AlunoNotasVM> ListarNotas = new();
 
-                ListarNotas = notas.Listar();
+                ListarNotas = boletins.ListarAlunosEspecifico();
 
                 return ListarNotas;
 
-            }catch (Exception) { throw; }
+            }
+            catch (Exception) { throw; }
 
-           
-            
+
+
         }
 
-        public void Salvar(BoletimAluno boletim)
+        public void Salvar(Boletim boletim)
         {
             try
             {
 
-              notas.Salvar(boletim);
+              boletins.Salvar(boletim);
 
             }catch (Exception) { throw; }
             
         }
 
-        public void Editar(BoletimAluno boletim)
-        {
-            try
-            {
-                
-                notas.Editar(boletim);
-
-            }catch (Exception) { throw; }
-            
-        }
-
-        public void Excluir(BoletimAluno boletim)
+        public void Editar(Boletim boletim)
         {
             try
             {
                 
-                notas.Excluir(boletim);
+                boletins.Editar(boletim);
+
+            }catch (Exception) { throw; }
+            
+        }
+
+        public void Excluir(Boletim boletim)
+        {
+            try
+            {
+                
+                boletins.Excluir(boletim);
             
             }catch (Exception) { throw; }
             
@@ -67,12 +70,12 @@ namespace ProjetoEscola.Model
 
         public bool VerificarIdentificador(int ra)
         {
-            return verificar = notas.VerificarIdentificador(ra);
+            return verificar = boletins.VerificarIdentificador(ra);
         }
 
         public bool VerificarAlunoEmateria(int ra, string materia)
         {
-            return verificar = notas.VerificarBoletim(ra, materia);
+            return verificar = boletins.VerificarBoletim(ra, materia);
 
         }
 

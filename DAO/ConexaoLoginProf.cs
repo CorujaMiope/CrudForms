@@ -8,6 +8,7 @@ using ProjetoEscola.Interface;
 using System.Data;
 using ProjetoEscola.Entidades;
 using Microsoft.VisualBasic.Logging;
+using ProjetoEscola.Windows.CriptografarSenha;
 
 namespace ProjetoEscola.DAO
 {
@@ -67,50 +68,54 @@ namespace ProjetoEscola.DAO
 
         }
 
-        internal bool VerificarProf(string email, string senha)
+       
+        public string senha2;
+        internal bool VerificarSeExistUsuario(string usuario, string senha1)
         {
-            try
+            var cripto = new Criptografar();
+
+            var connAberta = con.AbrirConexao();
+
+            comandos = new MySqlCommand("SELECT * FROM Professor WHERE Usuario = @usuario", connAberta);
+            comandos.Parameters.AddWithValue("@usuario", usuario);
+
+            dr = comandos.ExecuteReader();
+
+            
+
+            if (dr.Read())
             {
-                MySqlConnection conexao = new(servidor);
+                Nome = dr["Nome"].ToString();
+                Materia = dr["Materia"].ToString();
+                DataDeNascimento = dr["Nascimento"].ToString();
+                Id = dr["Id"].ToString();
+                Sexo = dr["Sexo"].ToString();
 
-                con.AbrirConexao();
-                var connAberta = con.AbrirConexao();
-
-                comandos = new MySqlCommand("SELECT * FROM professor WHERE Usuario = @login AND Senha = @senha", connAberta);
-                comandos.Parameters.AddWithValue("@login", email);
-                comandos.Parameters.AddWithValue("@senha", senha);
-
-
-                MySqlDataAdapter? da = new()
-                {
-                    SelectCommand = comandos
-                };
-
-                dr = comandos.ExecuteReader();
-
-                if (dr.Read())
-                {
-                    Nome = dr["Nome"].ToString();
-                    Materia = dr["Materia"].ToString();
-                    DataDeNascimento = dr["Nascimento"].ToString();
-                    Id = dr["Id"].ToString();
-                    Sexo = dr["Sexo"].ToString();
-                }
-
-                if (dr.HasRows)
-                {
-                    TemNoBanco = true;
-
-                } 
-                
-                return TemNoBanco;
-            }
-            catch { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
-            finally
-            {
-                con.FecharConexao();
+                senha2 = dr["Senha"].ToString();
             }
 
+            var senhaCripto = cripto.CriptografarSenha(senha1);
+
+            return senhaCripto == senha2 ? true : false;
+        }
+
+        internal bool VarificarUsuarioComID(string usuario, int id)
+        {
+            var connAberta = con.AbrirConexao();
+
+            comandos = new MySqlCommand(@"SELECT * FROM Professor
+                                        WHERE Usuario = @usuario
+                                        AND Id = @id", connAberta);
+
+            comandos.Parameters.AddWithValue("@usuario", usuario);
+            comandos.Parameters.AddWithValue("@id", id);
+
+            dr = comandos.ExecuteReader();
+
+           return dr.HasRows ? true : false;
+          
+
+            
         }
     }
 }

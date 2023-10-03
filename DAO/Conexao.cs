@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjetoEscola
+namespace ProjetoEscola.DAO
 {
     public class Conexao
     {
@@ -21,20 +21,20 @@ namespace ProjetoEscola
 
                 return conn;
             }
-            catch (MySqlException ex) { throw; MessageBox.Show("Erro" + ex.Message);  }
+            catch (MySqlException ex) { throw; MessageBox.Show("Erro" + ex.Message); }
         }
 
         public void FecharConexao()
         {
             try
             {
-                
+
                 conexao = new MySqlConnection(servidor);
                 conexao.Close();
             }
             catch { throw; }
 
-           
+
         }
     }
 }

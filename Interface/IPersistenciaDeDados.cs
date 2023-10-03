@@ -10,7 +10,7 @@ namespace ProjetoEscola.Interface
 {
     public interface IPersistenciaDeDados<T>
     {
-        public DataTable Listar();
+       // public List<T> Listar();
 
         public void Salvar(T entidade);
 

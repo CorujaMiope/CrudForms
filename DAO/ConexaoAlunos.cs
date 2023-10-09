@@ -154,16 +154,14 @@ namespace ProjetoEscola.DAO
 
                 dr = comandos.ExecuteReader();
 
-                if (dr.HasRows)
-                {
-                    temNoBanco = true;
-                }
+                return dr.HasRows;
+                
 
 
                 return temNoBanco;
 
             }
-            catch { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+            catch { throw; }
             finally
             {
                 con.FecharConexao();

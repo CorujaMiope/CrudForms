@@ -21,11 +21,11 @@ namespace ProjetoEscola.PonteDados
             {
                 List<Aluno> lista = new List <Aluno>();
 
-                lista = bancoAlunos.Listar();
+                return lista = bancoAlunos.Listar();
 
-                return lista;
+             
 
-            }catch (Exception ) { throw; }
+            }catch { throw; }
         }
 
         public List<Aluno> ListarDadosBasicos()
@@ -41,7 +41,7 @@ namespace ProjetoEscola.PonteDados
             {
                 bancoAlunos.Salvar(aluno);
 
-            }catch (Exception ) { throw; }
+            }catch { throw; }
         }
 
         public void Editar(Aluno aluno)
@@ -51,7 +51,7 @@ namespace ProjetoEscola.PonteDados
                 bancoAlunos.Editar(aluno);
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
         }
 
         public void Excluir(Aluno aluno)
@@ -60,7 +60,7 @@ namespace ProjetoEscola.PonteDados
             {
                 bancoAlunos.Excluir(aluno);
 
-            }catch (Exception) { throw; }
+            }catch { throw; }
            
         }
 

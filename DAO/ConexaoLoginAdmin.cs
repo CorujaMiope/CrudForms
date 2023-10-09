@@ -19,7 +19,7 @@ namespace ProjetoEscola.DAO
         Conexao con = new();
         MySqlCommand? comandos;
 
-        public bool AcessarAdmin(string email)
+        public bool VerificarSeExisteEmail(string email)
         {
             try
             {
@@ -43,16 +43,10 @@ namespace ProjetoEscola.DAO
 
                 dr = comandos.ExecuteReader();
 
-                if (dr.HasRows)
-                {
-                    TemNoBanco = true;
-                }
-                else
-                {
-                    TemNoBanco = false;
-                }
+                return (dr.HasRows) ? true : false; 
+                
 
-                return TemNoBanco;
+               
 
             }catch { throw; }
             finally
@@ -62,11 +56,11 @@ namespace ProjetoEscola.DAO
             
         }
 
-        public bool VerificarAdmin(string email, string senha)
+        public bool VerificarSeExisteUsuarioEsenha(string email, string senha)
         {
             try
             {
-                bool TemNoBanco;
+               
 
                 conexao = new(servidor);
                 con.AbrirConexao();
@@ -86,16 +80,10 @@ namespace ProjetoEscola.DAO
 
                 dr = comandos.ExecuteReader();
 
-                if (dr.HasRows)
-                {
-                    TemNoBanco = true;
-                }
-                else
-                {
-                    TemNoBanco = false;
-                }
+                return dr.HasRows;
+                
 
-                return TemNoBanco;
+              
 
             }
             catch { throw; }

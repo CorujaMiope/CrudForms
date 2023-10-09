@@ -21,7 +21,7 @@ namespace ProjetoEscola.DAO
 
                 return conn;
             }
-            catch (MySqlException ex) { throw; MessageBox.Show("Erro" + ex.Message); }
+            catch { throw; }
         }
 
         public void FecharConexao()

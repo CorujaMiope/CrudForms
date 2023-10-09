@@ -14,7 +14,7 @@ namespace ProjetoEscola.Model
 {
     public class ModelBoletim: IPersistenciaDeDados<Boletim>
     {
-        bool verificar;
+      
 
         readonly ConexaoBoletim boletins = new();
       
@@ -24,12 +24,10 @@ namespace ProjetoEscola.Model
             {
                 List<AlunoNotasVM> ListarNotas = new();
 
-                ListarNotas = boletins.ListarAlunosEspecifico();
-
-                return ListarNotas;
+                return ListarNotas = boletins.ListarAlunosEspecifico();
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
 
 
 
@@ -42,7 +40,7 @@ namespace ProjetoEscola.Model
 
               boletins.Salvar(boletim);
 
-            }catch (Exception) { throw; }
+            }catch { throw; }
             
         }
 
@@ -53,7 +51,7 @@ namespace ProjetoEscola.Model
                 
                 boletins.Editar(boletim);
 
-            }catch (Exception) { throw; }
+            }catch { throw; }
             
         }
 
@@ -64,18 +62,18 @@ namespace ProjetoEscola.Model
                 
                 boletins.Excluir(boletim);
             
-            }catch (Exception) { throw; }
+            }catch { throw; }
             
         }
 
         public bool VerificarIdentificador(int ra)
         {
-            return verificar = boletins.VerificarIdentificador(ra);
+            return boletins.VerificarIdentificador(ra);
         }
 
         public bool VerificarAlunoEmateria(int ra, string materia)
         {
-            return verificar = boletins.VerificarBoletim(ra, materia);
+            return boletins.VerificarBoletim(ra, materia);
 
         }
 

@@ -20,7 +20,7 @@ namespace ProjetoEscola.DAO
         MySqlDataReader? dr;
         readonly Conexao con = new();
 
-        public bool TemNoBanco;
+      
         public string? mensagem;
 
 
@@ -168,17 +168,11 @@ namespace ProjetoEscola.DAO
 
                 dr = comandos.ExecuteReader();
 
-                if (dr.HasRows)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return (dr.HasRows) ? true : false;
+                
 
             }
-            catch { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+            catch {  throw; }
             finally
             {
                 con.FecharConexao();

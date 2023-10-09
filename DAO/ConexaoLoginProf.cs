@@ -8,7 +8,7 @@ using ProjetoEscola.Interface;
 using System.Data;
 using ProjetoEscola.Entidades;
 using Microsoft.VisualBasic.Logging;
-using ProjetoEscola.Windows.CriptografarSenha;
+using ProjetoEscola.CriptografarSenha;
 
 namespace ProjetoEscola.DAO
 {
@@ -50,17 +50,12 @@ namespace ProjetoEscola.DAO
 
                 dr = comandos.ExecuteReader();
 
- 
-                if (dr.HasRows)
-                {
-                     TemNoBanco = true;
 
-                }    
-                
-                return TemNoBanco;            
+                return dr.HasRows;
+                          
                 
             }
-            catch { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+            catch { throw; }
             finally
             {
                 con.FecharConexao();

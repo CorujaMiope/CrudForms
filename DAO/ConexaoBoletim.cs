@@ -167,7 +167,8 @@ namespace ProjetoEscola.DAO
 
                 var connAberta = con.AbrirConexao();
 
-                comandos = new MySqlCommand("UPDATE Boletim SET Nota1 = @nota1, Nota2 = @nota2, Nota3 = @nota3, Nota4 = @nota4, NotaFinal = @media, Resultado = @condicao, Materia = @materia WHERE RA = @ra", connAberta);
+                comandos = new MySqlCommand(@"UPDATE Boletim SET Nota1 = @nota1, Nota2 = @nota2, Nota3 = @nota3, Nota4 = @nota4, NotaFinal = @media, Resultado = @condicao, Materia = @materia 
+                                            WHERE RA = @ra", connAberta);
                 comandos.Parameters.AddWithValue("@ra", boletim.RA);
                 comandos.Parameters.AddWithValue("@materia", boletim.Materia);
                 comandos.Parameters.AddWithValue("@nota1", boletim.N1);
@@ -238,12 +239,10 @@ namespace ProjetoEscola.DAO
                 da.Fill(BoletimDoAluno);
 
                 dr = comandos.ExecuteReader();
-               
 
-                if (dr.HasRows)
-                {
-                    TemNoBanco = true;
-                }               
+
+                return dr.HasRows;
+                               
 
             }
             catch { throw; }
@@ -252,7 +251,7 @@ namespace ProjetoEscola.DAO
                 con.FecharConexao();
             }
 
-            return TemNoBanco;
+            
         }
 
         public bool VerificarBoletim( int ra, string materia)
@@ -274,14 +273,8 @@ namespace ProjetoEscola.DAO
 
                 dr = comandos.ExecuteReader();
 
-                if (dr.HasRows)
-                {
-                    return TemNoBanco = true;
-                }
-                else
-                {
-                    return TemNoBanco = false;
-                }
+                return (dr.HasRows) ? true : false;
+                
 
             }
             catch { throw; }

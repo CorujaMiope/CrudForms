@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ProjetoEscola.Interface;
 using Microsoft.VisualBasic.Logging;
-using ProjetoEscola.Windows.CriptografarSenha;
+using ProjetoEscola.CriptografarSenha;
 using System.Drawing.Drawing2D;
 
 namespace ProjetoEscola.DAO
@@ -48,15 +48,10 @@ namespace ProjetoEscola.DAO
 
                 dr = comandos.ExecuteReader();
 
-                if (dr.HasRows)
-                {
-                    TemNoBanco = true;
-                }
-
-                return TemNoBanco;
+                return dr.HasRows;
 
             }
-            catch { this.mensagem = "Erro ao se conectar ao banco"; MessageBox.Show("Erro ao se conectar ao banco"); throw; }
+            catch { throw; }
             finally
             {
                 con.FecharConexao();
@@ -87,7 +82,7 @@ namespace ProjetoEscola.DAO
 
             var senhaCripto = cripto.CriptografarSenha(senha1);
 
-            return senhaCripto == senha2 ? true : false;
+            return senhaCripto == senha2;
         }
 
         public bool VarificarUsuarioComRA(string usuario, int ra)
@@ -106,10 +101,7 @@ namespace ProjetoEscola.DAO
 
                 dr = comandos.ExecuteReader();
 
-                bool retorno = (dr.HasRows) ? true : false;
-
-
-                return retorno;
+                return (dr.HasRows) ? true : false;
 
             }
             catch { throw; }

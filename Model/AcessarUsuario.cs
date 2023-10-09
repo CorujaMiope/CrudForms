@@ -9,20 +9,20 @@ namespace ProjetoEscola.Model
 {
     public class AcessarUsuario
     {
-        public bool TemUsuario;
+       
         public string? mensagem;
 
-        public bool AcessarAdiministrador(string email)
+        public bool VerificarSeExisteEmailNoAdmin(string email)
         {
             try
             {
                 var admin = new ConexaoLoginAdmin();
 
-                return TemUsuario = admin.AcessarAdmin(email);
+                return admin.VerificarSeExisteEmail(email);
 
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
             
             
         }
@@ -33,11 +33,11 @@ namespace ProjetoEscola.Model
             {
                 var admin = new ConexaoLoginAdmin();
 
-                return TemUsuario = admin.VerificarAdmin(email, senha);
+                return admin.VerificarSeExisteUsuarioEsenha(email, senha);
 
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
 
             
         }
@@ -48,11 +48,11 @@ namespace ProjetoEscola.Model
             {
                 var professor = new ConexaoLoginProf();
 
-                return TemUsuario = professor.AcessaUsuarios(email);
+                return professor.AcessaUsuarios(email);
                 
 
             }
-            catch (Exception ) { throw; }
+            catch { throw; }
 
             
         }
@@ -63,11 +63,11 @@ namespace ProjetoEscola.Model
             {
                 var admin = new ConexaoLoginProf();
 
-               return TemUsuario = admin.VerificarSeExistUsuario(email, senha);
+               return admin.VerificarSeExistUsuario(email, senha);
 
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
 
             
         }
@@ -78,9 +78,9 @@ namespace ProjetoEscola.Model
             {
                 var aluno = new ConexaoLoginAluno();
 
-                return TemUsuario = aluno.AcessaUsuarios(email);
+                return aluno.AcessaUsuarios(email);
 
-            }catch (Exception ) { throw; }
+            }catch { throw; }
 
             
         }
@@ -91,11 +91,11 @@ namespace ProjetoEscola.Model
             {
                 var admin = new ConexaoLoginAluno();
 
-                return TemUsuario = admin.VerificarSeExistUsuario(email, senha);
+                return admin.VerificarSeExistUsuario(email, senha);
 
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
 
             
         }

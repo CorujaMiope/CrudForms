@@ -20,7 +20,7 @@ namespace ProjetoEscola.PonteDados
                 return dataMateria = conexaoBoletim.ListarMaterias();              
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
         }
     }
 }

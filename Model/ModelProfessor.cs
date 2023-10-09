@@ -23,24 +23,21 @@ namespace ProjetoEscola.PonteDados
                
                 List<Professor> listar = new();
 
-                listar = conexaoProf.Listar();
-
-                return listar;
+               return listar = conexaoProf.Listar();
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
         }
 
         public List<Professor> ListarProfessor()
         {
-            
-
+            try
+            {
                 List<Professor> Lista = new();
 
-                Lista = conexaoProf.Listar();
+               return Lista = conexaoProf.Listar();
 
-                return Lista;
-
+            }catch { throw; }
             
         }
 
@@ -51,7 +48,7 @@ namespace ProjetoEscola.PonteDados
                 conexaoProf.Salvar(professor);
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
         }
 
         public void Editar(Professor professor)
@@ -61,7 +58,7 @@ namespace ProjetoEscola.PonteDados
                 conexaoProf.Editar(professor);
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
         }
 
         public void Excluir(Professor professor)
@@ -71,7 +68,7 @@ namespace ProjetoEscola.PonteDados
                 conexaoProf.Excluir(professor);
 
             }
-            catch (Exception) { throw; }
+            catch { throw; }
 
         }
 
@@ -83,7 +80,7 @@ namespace ProjetoEscola.PonteDados
 
                 return verificar;
 
-            }catch (Exception) { throw; }
+            }catch { throw; }
         }
 
         internal bool VerificarUsuarioComID(string usuario, int id)

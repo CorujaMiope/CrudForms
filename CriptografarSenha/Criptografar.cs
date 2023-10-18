@@ -31,7 +31,7 @@ namespace ProjetoEscola.CriptografarSenha
                 return sb.ToString().ToLower();
 
             }
-            catch { throw; }
+            catch { throw;  }
 
         }
     }
